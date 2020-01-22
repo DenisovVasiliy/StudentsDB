@@ -15,6 +15,9 @@ public class CourseDAO {
 
     private DAOFactory daoFactory = DAOFactory.getInstance();
 
+    public CourseDAO() throws DAOException {
+    }
+
     public List<Course> getAllCourses() throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;

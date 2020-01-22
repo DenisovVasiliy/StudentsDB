@@ -31,6 +31,9 @@ public class StudentDAO {
 
     private DAOFactory daoFactory = DAOFactory.getInstance();
 
+    public StudentDAO() throws DAOException {
+    }
+
     public void insertStudents(List<Student> students) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -98,9 +101,10 @@ public class StudentDAO {
             statement = connection.prepareStatement(INSERT);
             statement.setString(1, student.getFirstName());
             statement.setString(2, student.getLastName());
-            statement.setInt(3, student.getID());
-            statement.setInt(4, student.getGroupID());
             statement.executeUpdate();
+            List<Student> students = new ArrayList<>();
+            students.add(student);
+            insertToGroup(students);
         } catch (SQLException e) {
             throw new DAOException("Cannot insert student:", e);
         } finally {

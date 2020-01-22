@@ -17,6 +17,9 @@ public class GroupDAO {
 
     DAOFactory daoFactory = DAOFactory.getInstance();
 
+    public GroupDAO() throws DAOException {
+    }
+
     public void insertGroups(List<Group> groups) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;

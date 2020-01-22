@@ -19,26 +19,6 @@ public class Main {
         Main main = new Main();
         File createTables = main.getFileFromResources(CREATE_TABLES);
         scriptExecutor.executeScript(createTables);
-
-        List<Group> groups = new ArrayList<>();
-        List<Student> students = new ArrayList<>();
-        for(int i = 0; i < 5; i++) {
-            groups.add(new Group(i + 1, "group #" + 11 + (i + 1) + 0));
-            Student student = new Student(i+1, "Name-" + i, "Sur-" + i + 0);
-            student.setGroupID(4-i);
-            students.add(student);
-        }
-
-        for(int i = 0; i < 5; i++) {
-            Student student = new Student(i+6, "Name-" + (i + 5), "Sur-" + i);
-            student.setGroupID(3-i);
-            students.add(student);
-        }
-
-        GroupDAO groupDAO = new GroupDAO();
-        StudentDAO studentDAO = new StudentDAO();
-        groupDAO.insertGroups(groups);
-        studentDAO.insertStudents(students);
     }
 
     private File getFileFromResources(String fileName) {

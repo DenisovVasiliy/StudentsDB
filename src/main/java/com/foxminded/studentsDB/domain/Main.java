@@ -1,14 +1,10 @@
 package com.foxminded.studentsDB.domain;
 
 import com.foxminded.studentsDB.dao.DAOException;
-import com.foxminded.studentsDB.dao.GroupDAO;
 import com.foxminded.studentsDB.dao.ScriptExecutor;
-import com.foxminded.studentsDB.dao.StudentDAO;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
     private static final String CREATE_TABLES = "CreateTables.sql";

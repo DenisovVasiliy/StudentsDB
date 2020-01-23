@@ -1,2 +1,4 @@
 .git/
-/src/main/resources/CreateTables Ч копи€.sql
+src/main/resources/CreateTables Ч копи€.sql
+.idea/
+.gitignore

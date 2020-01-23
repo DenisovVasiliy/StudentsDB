@@ -1,26 +1,32 @@
 package com.foxminded.studentsDB.domain;
 
 import com.foxminded.studentsDB.dao.DAOException;
-import com.foxminded.studentsDB.dao.DAOFactory;
 import com.foxminded.studentsDB.dao.StudentDAO;
 
-import java.sql.SQLException;
-import java.util.List;
 
 public class Student {
-    private final int ID;
+    private int id;
     private String firstName;
     private String lastName;
     private int groupID;
 
-    public Student (int id, String firstName, String lastName) {
-        this.ID = id;
+    public Student (String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
+    public Student (int id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getID() {
-        return ID;
+        return id;
     }
 
     public String getFirstName() {

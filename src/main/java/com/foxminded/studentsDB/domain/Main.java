@@ -2,7 +2,6 @@ package com.foxminded.studentsDB.domain;
 
 import com.foxminded.studentsDB.dao.DAOException;
 import com.foxminded.studentsDB.dao.ScriptExecutor;
-import com.foxminded.studentsDB.dao.StudentDAO;
 
 import java.io.File;
 import java.net.URL;

@@ -1,18 +1,27 @@
 package com.foxminded.studentsDB.domain;
 
 public class Course {
-    private final int ID;
+    private int id;
     private String name;
     private String description;
 
-    public Course (int id, String name, String description) {
-        this.ID = id;
+    public Course (String name, String description) {
         this.name = name;
         this.description = description;
     }
 
-    public int getID() {
-        return ID;
+    public Course (int id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {

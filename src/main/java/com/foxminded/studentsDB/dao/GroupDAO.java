@@ -2,10 +2,7 @@ package com.foxminded.studentsDB.dao;
 
 import com.foxminded.studentsDB.domain.Group;
 
-import java.sql.PreparedStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,12 +19,20 @@ public class GroupDAO {
 
     public void insertGroups(List<Group> groups) throws DAOException {
         try (Connection connection = daoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_GROUPS)) {
+             PreparedStatement statement =
+                     connection.prepareStatement(INSERT_GROUPS, Statement.RETURN_GENERATED_KEYS)) {
             for(Group group : groups) {
                 statement.setString(1, group.getName());
                 statement.addBatch();
             }
             statement.executeBatch();
+            try (ResultSet resultSet = statement.getResultSet()) {
+                for(Group group : groups) {
+                    if(resultSet.next()) {
+                        group.setId(resultSet.getInt(1));
+                    }
+                }
+            }
         } catch (SQLException e) {
             throw new DAOException("Cannot insert list of groups:", e);
         }

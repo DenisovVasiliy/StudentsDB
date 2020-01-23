@@ -3,10 +3,7 @@ package com.foxminded.studentsDB.dao;
 import com.foxminded.studentsDB.domain.Course;
 import com.foxminded.studentsDB.domain.Student;
 
-import java.sql.PreparedStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -36,13 +33,20 @@ public class StudentDAO {
 
     public void insertStudents(List<Student> students) throws DAOException {
         try (Connection connection = daoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT)) {
+             PreparedStatement statement = connection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
             for (Student student: students) {
                 statement.setString(1, student.getFirstName());
                 statement.setString(2, student.getLastName());
                 statement.addBatch();
             }
             statement.executeBatch();
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                for(Student student : students) {
+                    if(generatedKeys.next()) {
+                        student.setId(generatedKeys.getInt(1));
+                    }
+                }
+            }
             insertToGroup(students);
         } catch (SQLException e) {
             throw new DAOException("Cannot insert list of students:", e);
@@ -67,10 +71,16 @@ public class StudentDAO {
 
     public void insertStudent(Student student) throws DAOException {
         try (Connection connection = daoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_TO_GROUP)) {
+             PreparedStatement statement =
+                     connection.prepareStatement(INSERT_TO_GROUP, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, student.getFirstName());
             statement.setString(2, student.getLastName());
             statement.executeUpdate();
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if(generatedKeys.next()) {
+                    student.setId(generatedKeys.getInt(1));
+                }
+            }
             List<Student> students = new ArrayList<>();
             students.add(student);
             insertToGroup(students);
@@ -122,7 +132,7 @@ public class StudentDAO {
                 Student student = entry.getKey();
                 for(Course course : entry.getValue()) {
                     statement.setInt(1, student.getID());
-                    statement.setInt(2, course.getID());
+                    statement.setInt(2, course.getId());
                     statement.addBatch();
                 }
             }
@@ -137,9 +147,9 @@ public class StudentDAO {
         try (Connection connection = daoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(ASSIGN_TO_COURSE)) {
             List<Integer> coursesID = this.getStudentsAssignments(student);
-            if(coursesID != null && !coursesID.contains(course.getID())) {
+            if(coursesID != null && !coursesID.contains(course.getId())) {
                 statement.setInt(1, student.getID());
-                statement.setInt(2, course.getID());
+                statement.setInt(2, course.getId());
                 statement.executeUpdate();
                 done = true;
             }
@@ -167,7 +177,7 @@ public class StudentDAO {
         try (Connection connection = daoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_FROM_COURSE)) {
             statement.setInt(1, student.getID());
-            statement.setInt(2, course.getID());
+            statement.setInt(2, course.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Cannot delete student from course:", e);

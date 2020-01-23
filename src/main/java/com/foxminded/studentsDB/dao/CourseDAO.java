@@ -2,10 +2,7 @@ package com.foxminded.studentsDB.dao;
 
 import com.foxminded.studentsDB.domain.Course;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,13 +29,21 @@ public class CourseDAO {
 
    public void insertCourses(List<Course> courses) throws DAOException {
        try (Connection connection = daoFactory.getConnection();
-            PreparedStatement statement = connection.prepareStatement(INSERT_COURSES)) {
+            PreparedStatement statement =
+                    connection.prepareStatement(INSERT_COURSES, Statement.RETURN_GENERATED_KEYS)) {
            for (Course course : courses) {
                statement.setString(1, course.getName());
                statement.setString(2, course.getDescription());
                statement.addBatch();
            }
            statement.executeBatch();
+           try (ResultSet resultSet = statement.getGeneratedKeys()) {
+               for(Course course : courses) {
+                   if(resultSet.next()) {
+                       course.setId(resultSet.getInt(1));
+                   }
+               }
+           }
        } catch (SQLException e) {
            throw new DAOException("Cannot insert courses:", e);
        }

@@ -2,18 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="941e20eb-7f28-4951-88bb-49fe307570ac" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/3/03cf823ee592249009d41426b1226d165ae28d14" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/3/03cf823ee592249009d41426b1226d165ae28d14" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/3/236a32064dcc9c1a43160e82b41b3e458c90cbb4" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/3/236a32064dcc9c1a43160e82b41b3e458c90cbb4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/3/332fc4bfa40fe89b05ef9754daacb596b2386b54" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/3/332fc4bfa40fe89b05ef9754daacb596b2386b54" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/b/7bc2b509a0f2724f8ec339ef5ef0c1819bfde9dd" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/b/7bc2b509a0f2724f8ec339ef5ef0c1819bfde9dd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/0/801e0ff548034846262c38217e016b38467dc0b5" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/0/801e0ff548034846262c38217e016b38467dc0b5" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/3/f35ac2d72f8a245e9ea34d7835ed7e9c26ef72d9" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/3/f35ac2d72f8a245e9ea34d7835ed7e9c26ef72d9" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/foxminded/studentsDB/dao/CourseDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/foxminded/studentsDB/dao/CourseDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/foxminded/studentsDB/dao/DAOFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/foxminded/studentsDB/dao/DAOFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/foxminded/studentsDB/dao/GroupDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/foxminded/studentsDB/dao/GroupDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/foxminded/studentsDB/dao/StudentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/foxminded/studentsDB/dao/StudentDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/foxminded/studentsDB/domain/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/foxminded/studentsDB/domain/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

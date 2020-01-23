@@ -35,32 +35,14 @@ public class GroupDAO {
 
     public List<Group> getGroupsByCounter(int counter) throws DAOException {
         List<Group> groups = null;
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = daoFactory.getConnection();
-            statement = connection.prepareStatement(GET_BY_COUNTER);
+        try (Connection connection = daoFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_BY_COUNTER)) {
             statement.setInt(1, counter);
-            resultSet = statement.executeQuery();
-            groups = processGroupSet(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                groups = processGroupSet(resultSet);
+            }
         } catch (SQLException e) {
             throw new DAOException("Cannot get groups with less or equals student count:", e);
-        } finally {
-            try {
-
-                if(statement != null) {
-                    statement.close();
-                }
-                if(resultSet != null) {
-                    resultSet.close();
-                }
-                if(connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         return groups;
     }

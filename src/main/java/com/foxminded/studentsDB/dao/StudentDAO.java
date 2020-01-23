@@ -94,27 +94,13 @@ public class StudentDAO {
     public List<Student> getByCourseName(String courseName) throws DAOException {
         List<Student> result = null;
         try (Connection connection = daoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(GET_BY_COURSE_NAME);
-             ResultSet resultSet = ) {
+             PreparedStatement statement = connection.prepareStatement(GET_BY_COURSE_NAME)) {
             statement.setString(1, courseName);
-            resultSet = statement.executeQuery();
-            result = processStudentsSet(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                result = processStudentsSet(resultSet);
+            }
         } catch (SQLException e) {
             throw new DAOException("Cannot get students by course name:", e);
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if(resultSet != null) {
-                    resultSet.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         return result;
     }
@@ -122,7 +108,6 @@ public class StudentDAO {
     public void deleteStudent(Student student) throws DAOException {
         try (Connection connection = daoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_STUDENT)) {
-
             statement.setInt(1, student.getID());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -165,32 +150,15 @@ public class StudentDAO {
     }
 
     private List<Integer> getStudentsAssignments(Student student) throws DAOException {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
         List<Integer> result = null;
-        try {
-            connection = daoFactory.getConnection();
-            statement = connection.prepareStatement(GET_ASSIGNMENTS_BY_STUDENT_ID);
+        try (Connection connection = daoFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_ASSIGNMENTS_BY_STUDENT_ID);) {
             statement.setInt(1, student.getID());
-            resultSet = statement.executeQuery();
-            result = processAssignmentsSet(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                result = processAssignmentsSet(resultSet);
+            }
         } catch (SQLException e) {
             throw new DAOException("Cannot get student's assignments:", e);
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if(resultSet != null) {
-                    resultSet.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         return result;
     }

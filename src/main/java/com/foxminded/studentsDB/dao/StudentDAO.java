@@ -3,8 +3,8 @@ package com.foxminded.studentsDB.dao;
 import com.foxminded.studentsDB.domain.Course;
 import com.foxminded.studentsDB.domain.Student;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,11 +35,8 @@ public class StudentDAO {
     }
 
     public void insertStudents(List<Student> students) throws DAOException {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try {
-            connection = daoFactory.getConnection();
-            statement = connection.prepareStatement(INSERT);
+        try (Connection connection = daoFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(INSERT)) {
             for (Student student: students) {
                 statement.setString(1, student.getFirstName());
                 statement.setString(2, student.getLastName());
@@ -49,26 +46,12 @@ public class StudentDAO {
             insertToGroup(students);
         } catch (SQLException e) {
             throw new DAOException("Cannot insert list of students:", e);
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 
     private void insertToGroup(List<Student> students) throws DAOException {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try {
-            connection = daoFactory.getConnection();
-            statement = connection.prepareStatement(INSERT_TO_GROUP);
+        try (Connection connection = daoFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(INSERT_TO_GROUP)) {
             for (Student student: students) {
                 if(student.getGroupID() > 0) {
                     statement.setInt(1, student.getID());
@@ -79,26 +62,12 @@ public class StudentDAO {
             statement.executeBatch();
         } catch (SQLException e) {
             throw new DAOException("Cannot insert list of students:", e);
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 
     public void insertStudent(Student student) throws DAOException {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try {
-            connection = daoFactory.getConnection();
-            statement = connection.prepareStatement(INSERT);
+        try (Connection connection = daoFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(INSERT_TO_GROUP)) {
             statement.setString(1, student.getFirstName());
             statement.setString(2, student.getLastName());
             statement.executeUpdate();
@@ -107,58 +76,26 @@ public class StudentDAO {
             insertToGroup(students);
         } catch (SQLException e) {
             throw new DAOException("Cannot insert student:", e);
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 
     public List<Student> getAllStudents() throws DAOException {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
         List<Student> result = null;
-        try {
-            connection = daoFactory.getConnection();
-            statement = connection.prepareStatement(GET_ALL);
-            resultSet = statement.executeQuery();
+        try (Connection connection = daoFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_ALL);
+             ResultSet resultSet = statement.executeQuery()) {
             result = processStudentsSet(resultSet);
         } catch (SQLException e) {
             throw new DAOException("Cannot get all students:", e);
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if(resultSet != null) {
-                    resultSet.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         return result;
     }
 
     public List<Student> getByCourseName(String courseName) throws DAOException {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
         List<Student> result = null;
-        try {
-            connection = daoFactory.getConnection();
-            statement = connection.prepareStatement(GET_BY_COURSE_NAME);
+        try (Connection connection = daoFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_BY_COURSE_NAME);
+             ResultSet resultSet = ) {
             statement.setString(1, courseName);
             resultSet = statement.executeQuery();
             result = processStudentsSet(resultSet);
@@ -183,35 +120,19 @@ public class StudentDAO {
     }
 
     public void deleteStudent(Student student) throws DAOException {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try {
-            connection = daoFactory.getConnection();
-            statement = connection.prepareStatement(DELETE_STUDENT);
+        try (Connection connection = daoFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_STUDENT)) {
+
             statement.setInt(1, student.getID());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Cannot delete student:", e);
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 
     public void assignToCourses(Map<Student, List<Course>> assignMap) throws DAOException {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try {
-            connection = daoFactory.getConnection();
-            statement = connection.prepareStatement(ASSIGN_TO_COURSE);
+        try (Connection connection = daoFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(ASSIGN_TO_COURSE)) {
             for(Map.Entry<Student, List<Course>> entry : assignMap.entrySet()) {
                 Student student = entry.getKey();
                 for(Course course : entry.getValue()) {
@@ -223,27 +144,13 @@ public class StudentDAO {
             statement.executeBatch();
         } catch (SQLException e) {
             throw new DAOException("Cannot assign students to courses:", e);
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 
     public boolean assignToCourse(Student student, Course course) throws DAOException {
-        Connection connection = null;
-        PreparedStatement statement = null;
         boolean done = false;
-        try {
-            connection = daoFactory.getConnection();
-            statement = connection.prepareStatement(ASSIGN_TO_COURSE);
+        try (Connection connection = daoFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(ASSIGN_TO_COURSE)) {
             List<Integer> coursesID = this.getStudentsAssignments(student);
             if(coursesID != null && !coursesID.contains(course.getID())) {
                 statement.setInt(1, student.getID());
@@ -253,17 +160,6 @@ public class StudentDAO {
             }
         } catch (SQLException e) {
             throw new DAOException("Cannot assign student to course:", e);
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         return done;
     }
@@ -300,27 +196,13 @@ public class StudentDAO {
     }
 
     public void deleteFromCourse(Student student, Course course) throws DAOException {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try {
-            connection = daoFactory.getConnection();
-            statement = connection.prepareStatement(DELETE_FROM_COURSE);
+        try (Connection connection = daoFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_FROM_COURSE)) {
             statement.setInt(1, student.getID());
             statement.setInt(2, course.getID());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Cannot delete student from course:", e);
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 

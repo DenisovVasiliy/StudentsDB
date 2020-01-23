@@ -21,11 +21,8 @@ public class GroupDAO {
     }
 
     public void insertGroups(List<Group> groups) throws DAOException {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try {
-            connection = daoFactory.getConnection();
-            statement = connection.prepareStatement(INSERT_GROUPS);
+        try (Connection connection = daoFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(INSERT_GROUPS)) {
             for(Group group : groups) {
                 statement.setString(1, group.getName());
                 statement.addBatch();
@@ -33,17 +30,6 @@ public class GroupDAO {
             statement.executeBatch();
         } catch (SQLException e) {
             throw new DAOException("Cannot insert list of groups:", e);
-        } finally {
-            try {
-                if(statement != null) {
-                    statement.close();
-                }
-                if(connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 

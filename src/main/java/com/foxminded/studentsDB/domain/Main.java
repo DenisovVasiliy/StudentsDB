@@ -12,13 +12,10 @@ public class Main {
     private static final String FILE_NOT_FOUND_MESSAGE = "File is not found: ";
 
     public static void main(String[] args) throws DAOException {
-        /*ScriptExecutor scriptExecutor = new ScriptExecutor();
+        ScriptExecutor scriptExecutor = new ScriptExecutor();
         Main main = new Main();
         File createTables = main.getFileFromResources(CREATE_TABLES);
-        scriptExecutor.executeScript(createTables);*/
-
-        StudentDAO studentDAO = new StudentDAO();
-        studentDAO.insertStudent(new Student(1, "1", "n"));
+        scriptExecutor.executeScript(createTables);
     }
 
     private File getFileFromResources(String fileName) {

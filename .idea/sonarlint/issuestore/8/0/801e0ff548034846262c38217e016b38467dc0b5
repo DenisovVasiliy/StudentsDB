@@ -1,2 +1,5 @@
 
 rsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Â²¢Õ
+jsquid:UnusedPrivateMethod"9Remove this unused private "getFileFromResources" method.(’÷ˆ”úÿÿÿÿ8¡–Şëü-
+Osquid:S1068"1Remove this unused "CREATE_TABLES" private field.(¡¯8¡–Şëü-
+isquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ë³³8¡–Şëü-

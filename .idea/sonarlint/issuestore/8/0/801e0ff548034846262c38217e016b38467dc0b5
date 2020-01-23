@@ -1,3 +1,0 @@
-
-tsquid:UselessImportCheck"DRemove this unused import 'com.foxminded.studentsDB.dao.StudentDAO'.(¯Ð’ƒÿÿÿÿÿ8Ú¤ÿŒý-
-rsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Â²¢Õ

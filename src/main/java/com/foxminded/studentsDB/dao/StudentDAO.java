@@ -5,6 +5,7 @@ import com.foxminded.studentsDB.domain.Student;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -81,8 +82,7 @@ public class StudentDAO {
                     student.setId(generatedKeys.getInt(1));
                 }
             }
-            List<Student> students = new ArrayList<>();
-            students.add(student);
+            List<Student> students = Collections.singletonList(student);
             insertToGroup(students);
         } catch (SQLException e) {
             throw new DAOException("Cannot insert student:", e);

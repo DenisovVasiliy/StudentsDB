@@ -1,5 +1,6 @@
 package com.foxminded.studentsDB.dao;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.File;
@@ -26,10 +27,18 @@ public class DataReader {
         return instance;
     }
 
-    public List<String> readData(File file) throws DAOException {
-        this.file = file;
+    public List<String> readData(String fileName) throws DAOException {
+        file = getFileFromResources(fileName);
         checkFile();
         return getData();
+    }
+
+    private File getFileFromResources(String fileName) {
+        ClassLoader classLoader = getClass().getClassLoader();
+        URL resource = classLoader.getResource(fileName);
+        if(resource == null) {
+            throw new IllegalArgumentException(FILE_NOT_FOUND_MESSAGE);
+        } else return new File(resource.getFile());
     }
 
     private void checkFile() throws DAOException {

@@ -21,8 +21,7 @@ public class DAOFactory {
     public static synchronized DAOFactory getInstance() throws DAOException {
         if(instance == null) {
             DataReader dataReader = DataReader.getInstance();
-            List<String> properties = dataReader.readData(
-                    new File("G:\\Java Learn\\StudentsDB\\src\\main\\resources\\database.properties"));
+            List<String> properties = dataReader.readData("database.properties");
             instance = new DAOFactory(properties.get(0),
                     properties.get(1), properties.get(2));
         }

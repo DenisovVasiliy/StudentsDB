@@ -13,9 +13,6 @@ import static java.nio.file.Paths.get;
 public class DataReader {
     private static DataReader instance;
     private File file;
-    private static final String FILE_NOT_FOUND_MESSAGE = "File is not found: ";
-    private static final String FILE_IS_EMPTY_MESSAGE = "File is empty: ";
-    private static final String CANNOT_READ_FILE = "Cannot read a file: ";
 
     private DataReader() {
     }
@@ -27,17 +24,31 @@ public class DataReader {
         return instance;
     }
 
-    public List<String> readData(String fileName) throws DAOException {
+    public DatabaseAccess getAccessData(String fileName) throws DAOException {
         file = getFileFromResources(fileName);
         checkFile();
-        return getData();
+        List<String> data =  getData();
+        return new DatabaseAccess(data.get(0), data.get(1), data.get(2));
+    }
+
+    public String[] getScripts(String fileName) throws DAOException {
+        file = getFileFromResources(fileName);
+        checkFile();
+        return buildScripts(getData());
+    }
+
+    public String getQuery(String fileName) throws DAOException {
+        file = getFileFromResources(fileName);
+        checkFile();
+        return getData().get(0);
     }
 
     private File getFileFromResources(String fileName) {
         ClassLoader classLoader = getClass().getClassLoader();
         URL resource = classLoader.getResource(fileName);
         if(resource == null) {
-            throw new IllegalArgumentException(FILE_NOT_FOUND_MESSAGE);
+            ErrorMessenger messenger = ErrorMessenger.getInstance();
+            throw new IllegalArgumentException(messenger.getFileNotFoundMessage());
         } else return new File(resource.getFile());
     }
 
@@ -48,13 +59,15 @@ public class DataReader {
 
     private void checkForExistence() throws DAOException {
         if(!(file.exists())) {
-            throw new DAOException(FILE_NOT_FOUND_MESSAGE + file.getAbsolutePath());
+            ErrorMessenger messenger = ErrorMessenger.getInstance();
+            throw new DAOException(messenger.getFileNotFoundMessage() + file.getAbsolutePath());
         }
     }
 
     private void checkForEmptiness() throws DAOException {
         if(file.length() == 0) {
-            throw new DAOException(FILE_IS_EMPTY_MESSAGE + file.getAbsolutePath());
+            ErrorMessenger messenger = ErrorMessenger.getInstance();
+            throw new DAOException(messenger.getFileIsEmptyMessage() + file.getAbsolutePath());
         }
     }
 
@@ -63,8 +76,17 @@ public class DataReader {
         try (Stream<String> stream = lines(get(file.getAbsolutePath()))) {
             list = stream.collect(toList());
         } catch (Exception e) {
-            throw new DAOException(CANNOT_READ_FILE + file.getAbsolutePath(), e);
+            ErrorMessenger messenger = ErrorMessenger.getInstance();
+            throw new DAOException(messenger.getCannotReadFile() + file.getAbsolutePath(), e);
         }
         return list;
+    }
+
+    private String[] buildScripts(List<String> list) {
+        StringBuilder script = new StringBuilder();
+        for(String line : list) {
+            script.append(line);
+        }
+        return script.toString().split(";");
     }
 }

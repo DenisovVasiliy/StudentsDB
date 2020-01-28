@@ -3,9 +3,6 @@ package com.foxminded.studentsDB.domain;
 import com.foxminded.studentsDB.dao.DAOException;
 import com.foxminded.studentsDB.dao.ScriptExecutor;
 
-import java.io.File;
-import java.net.URL;
-
 public class Main {
     private static final String CREATE_TABLES = "CreateTables.sql";
 

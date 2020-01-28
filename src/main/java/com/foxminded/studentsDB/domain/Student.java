@@ -25,7 +25,7 @@ public class Student {
         this.id = id;
     }
 
-    public int getID() {
+    public int getId() {
         return id;
     }
 

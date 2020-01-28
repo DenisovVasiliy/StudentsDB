@@ -3,7 +3,6 @@ package com.foxminded.studentsDB.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.List;
 
 public class DAOFactory {
     private static DAOFactory instance;
@@ -11,18 +10,17 @@ public class DAOFactory {
     private String user;
     private String password;
 
-    private DAOFactory(String url, String user, String password) {
-        this.url = url;
-        this.user = user;
-        this.password = password;
+    private DAOFactory(DatabaseAccess access) {
+        this.url = access.getUrl();
+        this.user = access.getUser();
+        this.password = access.getPassword();
     }
 
     public static synchronized DAOFactory getInstance() throws DAOException {
         if(instance == null) {
             DataReader dataReader = DataReader.getInstance();
-            List<String> properties = dataReader.readData("database.properties");
-            instance = new DAOFactory(properties.get(0),
-                    properties.get(1), properties.get(2));
+            DatabaseAccess access = dataReader.getAccessData("database.properties");
+            instance = new DAOFactory(access);
         }
         return instance;
     }

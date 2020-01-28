@@ -21,7 +21,7 @@ public class StudentDAO {
     }
 
     public void insertStudents(List<Student> students) throws DAOException {
-        String script = dataReader.readData("insertStudents.sql").get(0);
+        String script = dataReader.getQuery("insertStudents.sql");
         try (Connection connection = daoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(script, Statement.RETURN_GENERATED_KEYS)) {
             for (Student student: students) {
@@ -39,29 +39,31 @@ public class StudentDAO {
             }
             insertToGroup(students);
         } catch (SQLException e) {
-            throw new DAOException("Cannot insert list of students:", e);
+            ErrorMessenger messenger = ErrorMessenger.getInstance();
+            throw new DAOException(messenger.getCannotInsertStudentsList(), e);
         }
     }
 
     private void insertToGroup(List<Student> students) throws DAOException {
-        String script = dataReader.readData("insertStudentsToGroup.sql").get(0);
+        String script = dataReader.getQuery("insertStudentsToGroup.sql");
         try (Connection connection = daoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(script)) {
             for (Student student: students) {
                 if(student.getGroupID() > 0) {
-                    statement.setInt(1, student.getID());
+                    statement.setInt(1, student.getId());
                     statement.setInt(2, student.getGroupID());
                     statement.addBatch();
                 }
             }
             statement.executeBatch();
         } catch (SQLException e) {
-            throw new DAOException("Cannot insert list of students:", e);
+            ErrorMessenger messenger = ErrorMessenger.getInstance();
+            throw new DAOException(messenger.getCannotInsertStudentsList(), e);
         }
     }
 
     public void insertStudent(Student student) throws DAOException {
-        String script = dataReader.readData("insertStudents.sql").get(0);
+        String script = dataReader.getQuery("insertStudents.sql");
         try (Connection connection = daoFactory.getConnection();
              PreparedStatement statement =
                      connection.prepareStatement(script, Statement.RETURN_GENERATED_KEYS)) {
@@ -76,25 +78,27 @@ public class StudentDAO {
             List<Student> students = Collections.singletonList(student);
             insertToGroup(students);
         } catch (SQLException e) {
-            throw new DAOException("Cannot insert student:", e);
+            ErrorMessenger messenger = ErrorMessenger.getInstance();
+            throw new DAOException(messenger.getCannotInsertStudent(), e);
         }
     }
 
     public List<Student> getAllStudents() throws DAOException {
-        String script = dataReader.readData("getAllStudents.sql").get(0);
+        String script = dataReader.getQuery("getAllStudents.sql");
         List<Student> result = null;
         try (Connection connection = daoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(script);
              ResultSet resultSet = statement.executeQuery()) {
             result = processStudentsSet(resultSet);
         } catch (SQLException e) {
-            throw new DAOException("Cannot get all students:", e);
+            ErrorMessenger messenger = ErrorMessenger.getInstance();
+            throw new DAOException(messenger.getCannotGetAllStudents(), e);
         }
         return result;
     }
 
     public List<Student> getByCourseName(String courseName) throws DAOException {
-        String script = dataReader.readData("getStudentsByCourseName.sql").get(0);
+        String script = dataReader.getQuery("getStudentsByCourseName.sql");
         List<Student> result = null;
         try (Connection connection = daoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(script)) {
@@ -103,48 +107,54 @@ public class StudentDAO {
                 result = processStudentsSet(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException("Cannot get students by course name:", e);
+            ErrorMessenger messenger = ErrorMessenger.getInstance();
+            throw new DAOException(messenger.getCannotGetStudentsByCourse(), e);
         }
         return result;
     }
 
     public void deleteStudent(Student student) throws DAOException {
-        String script = dataReader.readData("deleteStudent.sql").get(0);
+        String script = dataReader.getQuery("deleteStudent.sql");
         try (Connection connection = daoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(script)) {
-            statement.setInt(1, student.getID());
+            statement.setInt(1, student.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Cannot delete student:", e);
+            ErrorMessenger messenger = ErrorMessenger.getInstance();
+            throw new DAOException(messenger.getCannotDeleteStudent(), e);
         }
     }
 
     public void assignToCourses(Map<Student, List<Course>> assignMap) throws DAOException {
-        String script = dataReader.readData("assignToCourse.sql").get(0);
+        String script = dataReader.getQuery("assignToCourse.sql");
         try (Connection connection = daoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(script)) {
             for(Map.Entry<Student, List<Course>> entry : assignMap.entrySet()) {
                 Student student = entry.getKey();
+                List<Integer> coursesId = this.getStudentsAssignments(student);
                 for(Course course : entry.getValue()) {
-                    statement.setInt(1, student.getID());
-                    statement.setInt(2, course.getId());
-                    statement.addBatch();
+                    if(!coursesId.contains(course.getId())) {
+                        statement.setInt(1, student.getId());
+                        statement.setInt(2, course.getId());
+                        statement.addBatch();
+                    }
                 }
             }
             statement.executeBatch();
         } catch (SQLException e) {
-            throw new DAOException("Cannot assign students to courses:", e);
+            ErrorMessenger messenger = ErrorMessenger.getInstance();
+            throw new DAOException(messenger.getCannotAssignToCourses(), e);
         }
     }
 
     public boolean assignToCourse(Student student, Course course) throws DAOException {
-        String script = dataReader.readData("assignToCourse.sql").get(0);
+        String script = dataReader.getQuery("assignToCourse.sql");
         boolean done = false;
         try (Connection connection = daoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(script)) {
-            List<Integer> coursesID = this.getStudentsAssignments(student);
-            if(coursesID != null && !coursesID.contains(course.getId())) {
-                statement.setInt(1, student.getID());
+            List<Integer> coursesId = this.getStudentsAssignments(student);
+            if(!coursesId.contains(course.getId())) {
+                statement.setInt(1, student.getId());
                 statement.setInt(2, course.getId());
                 statement.executeUpdate();
                 done = true;
@@ -156,11 +166,11 @@ public class StudentDAO {
     }
 
     private List<Integer> getStudentsAssignments(Student student) throws DAOException {
-        String script = dataReader.readData("getAssignments.sql").get(0);
+        String script = dataReader.getQuery("getAssignments.sql");
         List<Integer> result = null;
         try (Connection connection = daoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(script);) {
-            statement.setInt(1, student.getID());
+            statement.setInt(1, student.getId());
             try (ResultSet resultSet = statement.executeQuery()) {
                 result = processAssignmentsSet(resultSet);
             }
@@ -171,10 +181,10 @@ public class StudentDAO {
     }
 
     public void deleteFromCourse(Student student, Course course) throws DAOException {
-        String script = dataReader.readData("deleteFromCourse.sql").get(0);
+        String script = dataReader.getQuery("deleteFromCourse.sql");
         try (Connection connection = daoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(script)) {
-            statement.setInt(1, student.getID());
+            statement.setInt(1, student.getId());
             statement.setInt(2, course.getId());
             statement.executeUpdate();
         } catch (SQLException e) {

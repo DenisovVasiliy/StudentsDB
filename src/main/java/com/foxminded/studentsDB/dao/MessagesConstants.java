@@ -16,4 +16,7 @@ public class MessagesConstants {
     public static final String CANNOT_DELETE_FROM_COURSE = "Cannot delete student from course: ";
     public static final String CANNOT_PROCESS_STUDENTS_SET = "Cannot process set of students: ";
     public static final String CANNOT_PROCESS_ASSIGNMENTS_SET = "Cannot process set of assignments: ";
+    public static final String CANNOT_INSERT_GROUPS = "Cannot insert list of groups: ";
+    public static final String CANNOT_GET_GROUPS_BY_COUNTER = "Cannot get groups with less or equals student count: ";
+    public static final String CANNOT_PROCESS_GROUP_SET = "Cannot process groups set: ";
 }

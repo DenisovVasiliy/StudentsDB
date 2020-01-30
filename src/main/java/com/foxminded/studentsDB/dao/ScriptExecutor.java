@@ -19,8 +19,7 @@ public class ScriptExecutor {
             }
             statement.executeBatch();
         } catch (SQLException e) {
-            ErrorMessenger messenger = ErrorMessenger.getInstance();
-            throw new DAOException(messenger.getCannotExecuteScripts(), e);
+            throw new DAOException(MessagesConstants.CANNOT_EXECUTE_SCRIPTS, e);
         }
     }
 }

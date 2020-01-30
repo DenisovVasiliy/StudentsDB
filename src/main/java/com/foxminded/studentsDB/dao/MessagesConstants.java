@@ -1,0 +1,19 @@
+package com.foxminded.studentsDB.dao;
+
+public class MessagesConstants {
+    public static final String FILE_NOT_FOUND_MESSAGE = "File is not found: ";
+    public static final String FILE_IS_EMPTY_MESSAGE = "File is empty: ";
+    public static final String CANNOT_READ_FILE = "Cannot read a file: ";
+    public static final String CANNOT_INSERT_STUDENTS_LIST = "Cannot insert list of students: ";
+    public static final String CANNOT_INSERT_STUDENT = "Cannot insert student: ";
+    public static final String CANNOT_EXECUTE_SCRIPTS = "Cannot execute scripts: ";
+    public static final String CANNOT_GET_ALL_STUDENTS = "Cannot get all students: ";
+    public static final String CANNOT_GET_STUDENTS_BY_COURSE = "Cannot get students by course name: ";
+    public static final String CANNOT_DELETE_STUDENT = "Cannot delete student: ";
+    public static final String CANNOT_ASSIGN_TO_COURSES = "Cannot assign students to courses: ";
+    public static final String CANNOT_ASSIGN_TO_COURSE = "Cannot assign student to course: ";
+    public static final String CANNOT_GET_ASSIGNMENTS = "Cannot get student's assignments: ";
+    public static final String CANNOT_DELETE_FROM_COURSE = "Cannot delete student from course: ";
+    public static final String CANNOT_PROCESS_STUDENTS_SET = "Cannot process set of students: ";
+    public static final String CANNOT_PROCESS_ASSIGNMENTS_SET = "Cannot process set of assignments: ";
+}

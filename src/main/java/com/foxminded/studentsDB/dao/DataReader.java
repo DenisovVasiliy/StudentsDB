@@ -47,8 +47,7 @@ public class DataReader {
         ClassLoader classLoader = getClass().getClassLoader();
         URL resource = classLoader.getResource(fileName);
         if(resource == null) {
-            ErrorMessenger messenger = ErrorMessenger.getInstance();
-            throw new IllegalArgumentException(messenger.getFileNotFoundMessage());
+            throw new IllegalArgumentException(MessagesConstants.FILE_NOT_FOUND_MESSAGE + file.getAbsolutePath());
         } else return new File(resource.getFile());
     }
 
@@ -59,15 +58,13 @@ public class DataReader {
 
     private void checkForExistence() throws DAOException {
         if(!(file.exists())) {
-            ErrorMessenger messenger = ErrorMessenger.getInstance();
-            throw new DAOException(messenger.getFileNotFoundMessage() + file.getAbsolutePath());
+            throw new DAOException(MessagesConstants.FILE_NOT_FOUND_MESSAGE + file.getAbsolutePath());
         }
     }
 
     private void checkForEmptiness() throws DAOException {
         if(file.length() == 0) {
-            ErrorMessenger messenger = ErrorMessenger.getInstance();
-            throw new DAOException(messenger.getFileIsEmptyMessage() + file.getAbsolutePath());
+            throw new DAOException(MessagesConstants.FILE_IS_EMPTY_MESSAGE + file.getAbsolutePath());
         }
     }
 
@@ -76,8 +73,7 @@ public class DataReader {
         try (Stream<String> stream = lines(get(file.getAbsolutePath()))) {
             list = stream.collect(toList());
         } catch (Exception e) {
-            ErrorMessenger messenger = ErrorMessenger.getInstance();
-            throw new DAOException(messenger.getCannotReadFile() + file.getAbsolutePath(), e);
+            throw new DAOException(MessagesConstants.CANNOT_READ_FILE + file.getAbsolutePath(), e);
         }
         return list;
     }

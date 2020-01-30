@@ -11,30 +11,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CourseDAO {
-    private static final String GET_ALL = "SELECT * FROM students;";
-    private static final String INSERT_COURSES = "INSERT INTO courses(name, description) VALUES(?, ?);";
-
     private DAOFactory daoFactory = DAOFactory.getInstance();
+    private DataReader dataReader = DataReader.getInstance();
 
     public CourseDAO() throws DAOException {
     }
 
     public List<Course> getAllCourses() throws DAOException {
+        String script = dataReader.getQuery(QueryConstants.GET_ALL_COURSES);
         List<Course> courses = null;
         try (Connection connection = daoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(GET_ALL);
+             PreparedStatement statement = connection.prepareStatement(script);
              ResultSet resultSet = statement.executeQuery()) {
             courses = processCoursesSet(resultSet);
         } catch (SQLException e) {
-            throw new DAOException("Cannot get all courses:", e);
+            throw new DAOException(MessagesConstants.CANNOT_GET_COURSES, e);
         }
         return courses;
     }
 
    public void insertCourses(List<Course> courses) throws DAOException {
+       String script = dataReader.getQuery(QueryConstants.INSERT_COURSES);
        try (Connection connection = daoFactory.getConnection();
             PreparedStatement statement =
-                    connection.prepareStatement(INSERT_COURSES, Statement.RETURN_GENERATED_KEYS)) {
+                    connection.prepareStatement(script, Statement.RETURN_GENERATED_KEYS)) {
            for (Course course : courses) {
                statement.setString(1, course.getName());
                statement.setString(2, course.getDescription());
@@ -49,7 +49,7 @@ public class CourseDAO {
                }
            }
        } catch (SQLException e) {
-           throw new DAOException("Cannot insert courses:", e);
+           throw new DAOException(MessagesConstants.CANNOT_INSERT_COURSES, e);
        }
    }
 
@@ -62,7 +62,7 @@ public class CourseDAO {
                 courses.add(course);
             }
         } catch (SQLException e) {
-            throw new DAOException("Cannot process result set of courses:", e);
+            throw new DAOException(MessagesConstants.CANNOT_PROCESS_COURSES_SET, e);
         }
         return courses;
    }

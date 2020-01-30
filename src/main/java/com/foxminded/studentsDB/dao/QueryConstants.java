@@ -11,4 +11,6 @@ public class QueryConstants {
     public static final String DELETE_FROM_COURSE_FILE = "deleteFromCourse.sql";
     public static final String GET_GROUPS_BY_COUNTER = "getGroupsByCounter.sql";
     public static final String INSERT_GROUPS = "insertGroups.sql";
+    public static final String GET_ALL_COURSES = "getAllCourses.sql";
+    public static final String INSERT_COURSES = "insertCourses.sql";
 }

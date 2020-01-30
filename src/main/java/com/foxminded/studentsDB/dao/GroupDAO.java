@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GroupDAO {
-
     private DAOFactory daoFactory = DAOFactory.getInstance();
     private DataReader dataReader = DataReader.getInstance();
 

@@ -13,4 +13,5 @@ public class QueryConstants {
     public static final String INSERT_GROUPS = "insertGroups.sql";
     public static final String GET_ALL_COURSES = "getAllCourses.sql";
     public static final String INSERT_COURSES = "insertCourses.sql";
+    public static final String CREATE_TABLES = "CreateTables.sql";
 }

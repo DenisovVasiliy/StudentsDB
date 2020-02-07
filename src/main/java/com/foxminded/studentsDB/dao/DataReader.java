@@ -1,14 +1,19 @@
 package com.foxminded.studentsDB.dao;
 
+import com.foxminded.studentsDB.domain.Course;
+
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.io.File;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 import static java.nio.file.Files.lines;
 import static java.nio.file.Paths.get;
+import static java.util.stream.Collectors.toMap;
 
 public class DataReader {
     private static DataReader instance;
@@ -43,11 +48,29 @@ public class DataReader {
         return getData().get(0);
     }
 
+    public List<String> getNames(String fileName) throws DAOException {
+        file = getFileFromResources(fileName);
+        checkFile();
+        return getData();
+    }
+
+    public List<Course> getCourses(String fileName) throws DAOException {
+        file = getFileFromResources(fileName);
+        checkFile();
+        List<Course> courses = new ArrayList<>();
+        try (Stream<String> stream = lines(get(file.getAbsolutePath()))) {
+            courses = stream.map(this::createCourse).collect(toList());
+        } catch (Exception e) {
+            throw new DAOException(MessagesConstants.CANNOT_READ_FILE + file.getAbsolutePath(), e);
+        }
+        return courses;
+    }
+
     private File getFileFromResources(String fileName) {
         ClassLoader classLoader = getClass().getClassLoader();
         URL resource = classLoader.getResource(fileName);
         if(resource == null) {
-            throw new IllegalArgumentException(MessagesConstants.FILE_NOT_FOUND_MESSAGE + file.getAbsolutePath());
+            throw new IllegalArgumentException(MessagesConstants.FILE_NOT_FOUND_MESSAGE + fileName);
         } else return new File(resource.getFile());
     }
 
@@ -76,6 +99,11 @@ public class DataReader {
             throw new DAOException(MessagesConstants.CANNOT_READ_FILE + file.getAbsolutePath(), e);
         }
         return list;
+    }
+
+    private Course createCourse(String line) {
+        String[] courseString = line.split("_");
+        return new Course(courseString[0], courseString[1]);
     }
 
     private String[] buildScripts(List<String> list) {

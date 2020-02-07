@@ -25,7 +25,7 @@ public class CourseDAO {
              ResultSet resultSet = statement.executeQuery()) {
             courses = processCoursesSet(resultSet);
         } catch (SQLException e) {
-            throw new DAOException(MessagesConstants.CANNOT_GET_COURSES, e);
+            throw new DAOException(MessagesConstantsDAO.CANNOT_GET_COURSES, e);
         }
         return courses;
     }
@@ -49,7 +49,7 @@ public class CourseDAO {
                }
            }
        } catch (SQLException e) {
-           throw new DAOException(MessagesConstants.CANNOT_INSERT_COURSES, e);
+           throw new DAOException(MessagesConstantsDAO.CANNOT_INSERT_COURSES, e);
        }
    }
 
@@ -62,7 +62,7 @@ public class CourseDAO {
                 courses.add(course);
             }
         } catch (SQLException e) {
-            throw new DAOException(MessagesConstants.CANNOT_PROCESS_COURSES_SET, e);
+            throw new DAOException(MessagesConstantsDAO.CANNOT_PROCESS_COURSES_SET, e);
         }
         return courses;
    }

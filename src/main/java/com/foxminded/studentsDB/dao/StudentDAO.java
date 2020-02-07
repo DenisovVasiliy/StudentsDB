@@ -40,7 +40,7 @@ public class StudentDAO {
             }
             insertToGroup(students);
         } catch (SQLException e) {
-            throw new DAOException(MessagesConstants.CANNOT_INSERT_STUDENTS_LIST, e);
+            throw new DAOException(MessagesConstantsDAO.CANNOT_INSERT_STUDENTS_LIST, e);
         }
     }
 
@@ -57,7 +57,7 @@ public class StudentDAO {
             }
             statement.executeBatch();
         } catch (SQLException e) {
-            throw new DAOException(MessagesConstants.CANNOT_INSERT_STUDENTS_LIST, e);
+            throw new DAOException(MessagesConstantsDAO.CANNOT_INSERT_STUDENTS_LIST, e);
         }
     }
 
@@ -77,7 +77,7 @@ public class StudentDAO {
             List<Student> students = Collections.singletonList(student);
             insertToGroup(students);
         } catch (SQLException e) {
-            throw new DAOException(MessagesConstants.CANNOT_INSERT_STUDENT, e);
+            throw new DAOException(MessagesConstantsDAO.CANNOT_INSERT_STUDENT, e);
         }
     }
 
@@ -89,7 +89,7 @@ public class StudentDAO {
              ResultSet resultSet = statement.executeQuery()) {
             result = processStudentsSet(resultSet);
         } catch (SQLException e) {
-            throw new DAOException(MessagesConstants.CANNOT_GET_ALL_STUDENTS, e);
+            throw new DAOException(MessagesConstantsDAO.CANNOT_GET_ALL_STUDENTS, e);
         }
         return result;
     }
@@ -104,7 +104,7 @@ public class StudentDAO {
                 result = processStudentsSet(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException(MessagesConstants.CANNOT_GET_STUDENTS_BY_COURSE, e);
+            throw new DAOException(MessagesConstantsDAO.CANNOT_GET_STUDENTS_BY_COURSE, e);
         }
         return result;
     }
@@ -116,7 +116,7 @@ public class StudentDAO {
             statement.setInt(1, student.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException(MessagesConstants.CANNOT_DELETE_STUDENT, e);
+            throw new DAOException(MessagesConstantsDAO.CANNOT_DELETE_STUDENT, e);
         }
     }
 
@@ -137,7 +137,7 @@ public class StudentDAO {
             }
             statement.executeBatch();
         } catch (SQLException e) {
-            throw new DAOException(MessagesConstants.CANNOT_ASSIGN_TO_COURSES, e);
+            throw new DAOException(MessagesConstantsDAO.CANNOT_ASSIGN_TO_COURSES, e);
         }
     }
 
@@ -154,7 +154,7 @@ public class StudentDAO {
                 done = true;
             }
         } catch (SQLException e) {
-            throw new DAOException(MessagesConstants.CANNOT_ASSIGN_TO_COURSE, e);
+            throw new DAOException(MessagesConstantsDAO.CANNOT_ASSIGN_TO_COURSE, e);
         }
         return done;
     }
@@ -169,7 +169,7 @@ public class StudentDAO {
                 result = processAssignmentsSet(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException(MessagesConstants.CANNOT_GET_ASSIGNMENTS, e);
+            throw new DAOException(MessagesConstantsDAO.CANNOT_GET_ASSIGNMENTS, e);
         }
         return result;
     }
@@ -182,7 +182,7 @@ public class StudentDAO {
             statement.setInt(2, course.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException(MessagesConstants.CANNOT_DELETE_FROM_COURSE, e);
+            throw new DAOException(MessagesConstantsDAO.CANNOT_DELETE_FROM_COURSE, e);
         }
     }
 
@@ -197,7 +197,7 @@ public class StudentDAO {
                 result.add(student);
             }
         } catch (SQLException e) {
-            throw new DAOException(MessagesConstants.CANNOT_PROCESS_STUDENTS_SET, e);
+            throw new DAOException(MessagesConstantsDAO.CANNOT_PROCESS_STUDENTS_SET, e);
         }
         return result;
     }
@@ -210,7 +210,7 @@ public class StudentDAO {
                 result.add(courseID);
             }
         } catch (SQLException e) {
-            throw new DAOException(MessagesConstants.CANNOT_PROCESS_ASSIGNMENTS_SET, e);
+            throw new DAOException(MessagesConstantsDAO.CANNOT_PROCESS_ASSIGNMENTS_SET, e);
         }
         return result;
     }

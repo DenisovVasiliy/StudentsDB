@@ -4,16 +4,13 @@ import com.foxminded.studentsDB.domain.Course;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.io.File;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 import static java.nio.file.Files.lines;
 import static java.nio.file.Paths.get;
-import static java.util.stream.Collectors.toMap;
 
 public class DataReader {
     private static DataReader instance;
@@ -61,7 +58,7 @@ public class DataReader {
         try (Stream<String> stream = lines(get(file.getAbsolutePath()))) {
             courses = stream.map(this::createCourse).collect(toList());
         } catch (Exception e) {
-            throw new DAOException(MessagesConstants.CANNOT_READ_FILE + file.getAbsolutePath(), e);
+            throw new DAOException(MessagesConstantsDAO.CANNOT_READ_FILE + file.getAbsolutePath(), e);
         }
         return courses;
     }
@@ -70,7 +67,7 @@ public class DataReader {
         ClassLoader classLoader = getClass().getClassLoader();
         URL resource = classLoader.getResource(fileName);
         if(resource == null) {
-            throw new IllegalArgumentException(MessagesConstants.FILE_NOT_FOUND_MESSAGE + fileName);
+            throw new IllegalArgumentException(MessagesConstantsDAO.FILE_NOT_FOUND_MESSAGE + fileName);
         } else return new File(resource.getFile());
     }
 
@@ -81,13 +78,13 @@ public class DataReader {
 
     private void checkForExistence() throws DAOException {
         if(!(file.exists())) {
-            throw new DAOException(MessagesConstants.FILE_NOT_FOUND_MESSAGE + file.getAbsolutePath());
+            throw new DAOException(MessagesConstantsDAO.FILE_NOT_FOUND_MESSAGE + file.getAbsolutePath());
         }
     }
 
     private void checkForEmptiness() throws DAOException {
         if(file.length() == 0) {
-            throw new DAOException(MessagesConstants.FILE_IS_EMPTY_MESSAGE + file.getAbsolutePath());
+            throw new DAOException(MessagesConstantsDAO.FILE_IS_EMPTY_MESSAGE + file.getAbsolutePath());
         }
     }
 
@@ -96,7 +93,7 @@ public class DataReader {
         try (Stream<String> stream = lines(get(file.getAbsolutePath()))) {
             list = stream.collect(toList());
         } catch (Exception e) {
-            throw new DAOException(MessagesConstants.CANNOT_READ_FILE + file.getAbsolutePath(), e);
+            throw new DAOException(MessagesConstantsDAO.CANNOT_READ_FILE + file.getAbsolutePath(), e);
         }
         return list;
     }

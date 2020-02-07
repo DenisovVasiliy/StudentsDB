@@ -35,7 +35,7 @@ public class GroupDAO {
                 }
             }
         } catch (SQLException e) {
-            throw new DAOException(MessagesConstants.CANNOT_INSERT_GROUPS, e);
+            throw new DAOException(MessagesConstantsDAO.CANNOT_INSERT_GROUPS, e);
         }
     }
 
@@ -49,7 +49,7 @@ public class GroupDAO {
                 groups = processGroupSet(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException(MessagesConstants.CANNOT_GET_GROUPS_BY_COUNTER, e);
+            throw new DAOException(MessagesConstantsDAO.CANNOT_GET_GROUPS_BY_COUNTER, e);
         }
         return groups;
     }
@@ -62,7 +62,7 @@ public class GroupDAO {
                 groups.add(group);
             }
         } catch (SQLException e) {
-            throw new DAOException(MessagesConstants.CANNOT_PROCESS_GROUP_SET, e);
+            throw new DAOException(MessagesConstantsDAO.CANNOT_PROCESS_GROUP_SET, e);
         }
         return groups;
     }

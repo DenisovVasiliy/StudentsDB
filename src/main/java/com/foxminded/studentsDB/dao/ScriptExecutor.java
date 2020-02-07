@@ -19,7 +19,7 @@ public class ScriptExecutor {
             }
             statement.executeBatch();
         } catch (SQLException e) {
-            throw new DAOException(MessagesConstants.CANNOT_EXECUTE_SCRIPTS, e);
+            throw new DAOException(MessagesConstantsDAO.CANNOT_EXECUTE_SCRIPTS, e);
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.foxminded.studentsDB.dao;
 
-public class MessagesConstants {
+public class MessagesConstantsDAO {
     public static final String FILE_NOT_FOUND_MESSAGE = "File is not found: ";
     public static final String FILE_IS_EMPTY_MESSAGE = "File is empty: ";
     public static final String CANNOT_READ_FILE = "Cannot read a file: ";

@@ -31,4 +31,19 @@ public class Course {
     public String getDescription() {
         return description;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Course)) return false;
+
+        Course course = (Course) o;
+
+        return id == course.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }

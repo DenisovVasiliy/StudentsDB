@@ -8,9 +8,9 @@ public class Student {
     private int id;
     private String firstName;
     private String lastName;
-    private int groupID;
+    private int groupId;
 
-    public Student (int id, String firstName, String lastName) {
+    public Student(int id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,12 +32,12 @@ public class Student {
         return lastName;
     }
 
-    public int getGroupID() {
-        return groupID;
+    public int getGroupId() {
+        return groupId;
     }
 
-    public void setGroupID (int groupID) {
-        this.groupID = groupID;
+    public void setGroupId(int groupID) {
+        this.groupId = groupID;
     }
 
     public boolean assignToCourse(Course course) throws DAOException {

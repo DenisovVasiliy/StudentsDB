@@ -22,14 +22,14 @@ public class GroupDAO {
         try (Connection connection = daoFactory.getConnection();
              PreparedStatement statement =
                      connection.prepareStatement(script, Statement.RETURN_GENERATED_KEYS)) {
-            for(Group group : groups) {
+            for (Group group : groups) {
                 statement.setString(1, group.getName());
                 statement.addBatch();
             }
             statement.executeBatch();
-            try (ResultSet resultSet = statement.getResultSet()) {
-                for(Group group : groups) {
-                    if(resultSet.next()) {
+            try (ResultSet resultSet = statement.getGeneratedKeys()) {
+                for (Group group : groups) {
+                    if (resultSet.next()) {
                         group.setId(resultSet.getInt(1));
                     }
                 }

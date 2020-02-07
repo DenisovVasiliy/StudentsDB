@@ -1,9 +1,6 @@
 package com.foxminded.studentsDB.domain;
 
-import com.foxminded.studentsDB.dao.DAOException;
-import com.foxminded.studentsDB.dao.DataConstants;
-import com.foxminded.studentsDB.dao.DataReader;
-import com.foxminded.studentsDB.dao.GroupDAO;
+import com.foxminded.studentsDB.dao.*;
 
 import java.util.Set;
 import java.util.List;
@@ -20,19 +17,19 @@ public class DataCreator {
 
     public TestData createTestData() throws DAOException {
         testData.setGroups(createGroups());
+        insertGroupsIntoDatabase();
         testData.setCourses(createCourses());
         testData.setStudents(createStudents());
         createGroupsAssignments();
+        insertIntoDatabase();
         return testData;
     }
 
-    private List<Group> createGroups() throws DAOException {
+    private List<Group> createGroups() {
         List<Group> groups = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             groups.add(new Group(createGroupName()));
         }
-        GroupDAO groupDAO = new GroupDAO();
-        groupDAO.insertGroups(groups);
         return groups;
     }
 
@@ -59,8 +56,8 @@ public class DataCreator {
 
     private String createGroupName() {
         StringBuilder name = new StringBuilder();
-        name.append((char) (random.nextInt(27) + 96));
-        name.append((char) (random.nextInt(27) + 96));
+        name.append((char) (random.nextInt(26) + 97));
+        name.append((char) (random.nextInt(26) + 97));
         name.append('-');
         name.append(random.nextInt(10));
         name.append(random.nextInt(10));
@@ -84,10 +81,37 @@ public class DataCreator {
             int counter = random.nextInt(2) * (random.nextInt(21) + 10);
             while (counter > 0) {
                 Student student = freeStudents.get(random.nextInt(freeStudents.size()));
-                student.setGroupID(group.getId());
+                student.setGroupId(group.getId());
                 freeStudents.remove(student);
                 counter--;
             }
         }
+    }
+
+    private void insertGroupsIntoDatabase() throws DAOException {
+        GroupDAO groupDAO = new GroupDAO();
+        groupDAO.insertGroups(testData.getGroups());
+    }
+
+    private void insertIntoDatabase() throws DAOException {
+        insertCoursesIntoDatabase();
+        insertStudentsIntoDatabase();
+        insertCourseAssignmentsIntoDatabase();
+    }
+
+    private void insertCoursesIntoDatabase() throws DAOException {
+        CourseDAO courseDAO = new CourseDAO();
+        courseDAO.insertCourses(testData.getCourses());
+    }
+
+    private void insertStudentsIntoDatabase() throws DAOException {
+        StudentDAO studentDAO = new StudentDAO();
+        List<Student> students = new ArrayList<>(testData.getStudents().keySet());
+        studentDAO.insertStudents(students);
+    }
+
+    private void insertCourseAssignmentsIntoDatabase() throws DAOException {
+        StudentDAO studentDAO = new StudentDAO();
+        studentDAO.assignToCourses(testData.getStudents());
     }
 }

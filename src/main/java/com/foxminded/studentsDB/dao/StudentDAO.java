@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class StudentDAO {
     private DAOFactory daoFactory = DAOFactory.getInstance();
@@ -48,9 +49,9 @@ public class StudentDAO {
         try (Connection connection = daoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(script)) {
             for (Student student : students) {
-                if (student.getGroupID() > 0) {
+                if (student.getGroupId() > 0) {
                     statement.setInt(1, student.getId());
-                    statement.setInt(2, student.getGroupID());
+                    statement.setInt(2, student.getGroupId());
                     statement.addBatch();
                 }
             }
@@ -119,11 +120,11 @@ public class StudentDAO {
         }
     }
 
-    public void assignToCourses(Map<Student, List<Course>> assignMap) throws DAOException {
+    public void assignToCourses(Map<Student, Set<Course>> assignMap) throws DAOException {
         String script = dataReader.getQuery(QueryConstants.ASSIGN_TO_COURSE_FILE);
         try (Connection connection = daoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(script)) {
-            for (Map.Entry<Student, List<Course>> entry : assignMap.entrySet()) {
+            for (Map.Entry<Student, Set<Course>> entry : assignMap.entrySet()) {
                 Student student = entry.getKey();
                 List<Integer> coursesId = this.getStudentsAssignments(student);
                 for (Course course : entry.getValue()) {
@@ -192,7 +193,7 @@ public class StudentDAO {
                 Student student =
                         new Student(resultSet.getInt("id"), resultSet.getString("first_name"),
                                 resultSet.getString("last_name"));
-                student.setGroupID(resultSet.getInt("group_id"));
+                student.setGroupId(resultSet.getInt("group_id"));
                 result.add(student);
             }
         } catch (SQLException e) {

@@ -1,7 +1,7 @@
 package com.foxminded.studentsDB.ui;
 
 import com.foxminded.studentsDB.dao.DAOException;
-import com.foxminded.studentsDB.dao.GroupDAO;
+import com.foxminded.studentsDB.domain.Requester;
 
 import java.util.Scanner;
 
@@ -12,19 +12,24 @@ public class ConsoleListener implements Listener {
     @Override
     public void listen() throws DAOException {
         printer.printString(MessagesConstants.HELP);
+        Requester requester = new Requester();
         String command = console.nextLine().toLowerCase();
-        while (!(command.equals("exit"))) {
+        while (!(command.equals(CommandsConstants.EXIT))) {
             switch (command) {
-                case "help": printer.printString(MessagesConstants.HELP);
-                break;
-                case "f g": printer.printGroups(new GroupDAO().getGroupsByCounter(getCounter()));
-                break;
-                case "exit": break;
+                case CommandsConstants.HELP:
+                    printer.printString(MessagesConstants.HELP);
+                    break;
+                case CommandsConstants.FIND_GROUPS:
+                    requester.requestGetGroupsByCounter(getCounter());
+                    break;
+                case CommandsConstants.FIND_STUDENTS_BY_COURSE:
+                    requester.requestGetStudentsByCourse();
+                    break;
                 default:
                     printer.printString(MessagesConstants.UNKNOWN_COMMAND);
                     printer.printString(MessagesConstants.HELP);
             }
-            console.nextLine();
+            if (command.equals(CommandsConstants.FIND_GROUPS)) console.nextLine();
             command = console.nextLine().toLowerCase();
         }
         console.close();
@@ -33,9 +38,23 @@ public class ConsoleListener implements Listener {
     @Override
     public int getCounter() {
         printer.printString(MessagesConstants.INPUT_COUNTER);
-        if(console.hasNextInt()) {
+        if (console.hasNextInt()) {
             return console.nextInt();
         } else printer.printString(MessagesConstants.COUNTER_INPUT_ERROR);
+        console.nextLine();
+        return getCounter();
+    }
+
+    @Override
+    public int getCourseNumber(int limit) {
+        printer.printString(MessagesConstants.INPUT_COURSE_NUMBER);
+        int courseNumber;
+        if (console.hasNextInt()) {
+            courseNumber = console.nextInt();
+            if((courseNumber > 0) && (courseNumber <= limit)) {
+                return courseNumber;
+            }
+        } else printer.printString(MessagesConstants.COURSE_NUMBER_INPUT_ERROR);
         console.nextLine();
         return getCounter();
     }

@@ -12,7 +12,7 @@ import java.util.HashSet;
 
 public class DataCreator {
     private DataReader dataReader = DataReader.getInstance();
-    private final Random random = new Random();
+    private Random random = new Random();
     private TestData testData = new TestData();
 
     public TestData createTestData() throws DAOException {

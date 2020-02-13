@@ -2,6 +2,7 @@ package com.foxminded.studentsDB.dao;
 
 import com.foxminded.studentsDB.domain.Course;
 import com.foxminded.studentsDB.domain.Student;
+import com.foxminded.studentsDB.ui.Listener;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class StudentDAO {
     private DAOFactory daoFactory = DAOFactory.getInstance();
@@ -92,6 +94,21 @@ public class StudentDAO {
             throw new DAOException(MessagesConstantsDAO.CANNOT_GET_ALL_STUDENTS, e);
         }
         return result;
+    }
+
+    public Student getStudentById(int id) throws DAOException {
+        String script = dataReader.getQuery(QueryConstants.GET_STUDENT_BY_ID);
+        List<Student> result = null;
+        try (Connection connection = daoFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(script)) {
+            statement.setInt(1, id);
+            try(ResultSet resultSet = statement.executeQuery()) {
+                result = processStudentsSet(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(MessagesConstantsDAO.CANNOT_GET_STUDENT_BY_ID, e);
+        }
+        return result.get(0);
     }
 
     public List<Student> getByCourseName(String courseName) throws DAOException {

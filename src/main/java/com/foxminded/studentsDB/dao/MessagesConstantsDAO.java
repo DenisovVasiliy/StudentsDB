@@ -22,4 +22,5 @@ public class MessagesConstantsDAO {
     public static final String CANNOT_GET_COURSES = "Cannot get all courses: ";
     public static final String CANNOT_INSERT_COURSES = "Cannot insert courses: ";
     public static final String CANNOT_PROCESS_COURSES_SET = "Cannot process result set of courses: ";
+    public static final String CANNOT_GET_STUDENT_BY_ID = "Cannot get student by id: ";
 }

@@ -12,7 +12,12 @@ import com.foxminded.studentsDB.ui.Printer;
 import java.util.List;
 
 public class Requester {
-    Printer printer = new ConsolePrinter();
+    private Printer printer = new ConsolePrinter();
+    private StudentDAO studentDAO = new StudentDAO();
+
+    public Requester() throws DAOException {
+    }
+
     public void requestGetGroupsByCounter(int counter) throws DAOException {
         printer.printGroups(new GroupDAO().getGroupsByCounter(counter), counter);
     }
@@ -23,6 +28,11 @@ public class Requester {
         StudentDAO studentDAO = new StudentDAO();
         Course course = courses.get(listener.getCourseNumber(courses.size()) - 1);
         printer.printStudentsFromCourse(course.getName(), studentDAO.getByCourseName(course.getName()));
+    }
+
+    public void requestDeleteStudent(int studentId) throws DAOException{
+        Student student = studentDAO.getStudentById(studentId);
+        studentDAO.deleteStudent(student);
     }
 
     private List<Course> requestGetAllCourses() throws DAOException {

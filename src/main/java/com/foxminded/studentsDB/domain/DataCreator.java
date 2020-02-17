@@ -14,6 +14,12 @@ public class DataCreator {
     private DataReader dataReader = DataReader.getInstance();
     private Random random = new Random();
     private TestData testData = new TestData();
+    private GroupDAO groupDAO = new GroupDAO();
+    private StudentDAO studentDAO = new StudentDAO();
+    private CourseDAO courseDAO = new CourseDAO();
+
+    public DataCreator() throws DAOException {
+    }
 
     public TestData createTestData() throws DAOException {
         testData.setGroups(createGroups());
@@ -89,7 +95,6 @@ public class DataCreator {
     }
 
     private void insertGroupsIntoDatabase() throws DAOException {
-        GroupDAO groupDAO = new GroupDAO();
         groupDAO.insertGroups(testData.getGroups());
     }
 
@@ -100,18 +105,15 @@ public class DataCreator {
     }
 
     private void insertCoursesIntoDatabase() throws DAOException {
-        CourseDAO courseDAO = new CourseDAO();
         courseDAO.insertCourses(testData.getCourses());
     }
 
     private void insertStudentsIntoDatabase() throws DAOException {
-        StudentDAO studentDAO = new StudentDAO();
         List<Student> students = new ArrayList<>(testData.getStudents().keySet());
         studentDAO.insertStudents(students);
     }
 
     private void insertCourseAssignmentsIntoDatabase() throws DAOException {
-        StudentDAO studentDAO = new StudentDAO();
         studentDAO.assignToCourses(testData.getStudents());
     }
 }

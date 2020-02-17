@@ -14,18 +14,20 @@ import java.util.List;
 public class Requester {
     private Printer printer = new ConsolePrinter();
     private StudentDAO studentDAO = new StudentDAO();
+    private CourseDAO courseDAO = new CourseDAO();
+    private GroupDAO groupDAO = new GroupDAO();
 
     public Requester() throws DAOException {
     }
 
+
     public void requestGetGroupsByCounter(int counter) throws DAOException {
-        printer.printGroups(new GroupDAO().getGroupsByCounter(counter), counter);
+        printer.printGroups(groupDAO.getGroupsByCounter(counter), counter);
     }
 
     public void requestGetStudentsByCourse() throws DAOException {
         List<Course> courses = requestGetAllCourses();
         Listener listener = new ConsoleListener();
-        StudentDAO studentDAO = new StudentDAO();
         Course course = courses.get(listener.getCourseNumber(courses.size()) - 1);
         printer.printStudentsFromCourse(course.getName(), studentDAO.getByCourseName(course.getName()));
     }
@@ -35,8 +37,7 @@ public class Requester {
         studentDAO.deleteStudent(student);
     }
 
-    private List<Course> requestGetAllCourses() throws DAOException {
-        CourseDAO courseDAO = new CourseDAO();
+    public List<Course> requestGetAllCourses() throws DAOException {
         List<Course> courses = courseDAO.getAllCourses();
         printer.printCourses(courses);
         return courses;

@@ -16,6 +16,7 @@ public class Requester {
     private StudentDAO studentDAO = new StudentDAO();
     private CourseDAO courseDAO = new CourseDAO();
     private GroupDAO groupDAO = new GroupDAO();
+    private Listener listener = new ConsoleListener();
 
     public Requester() throws DAOException {
     }
@@ -27,14 +28,12 @@ public class Requester {
 
     public void requestGetStudentsByCourse() throws DAOException {
         List<Course> courses = requestGetAllCourses();
-        Listener listener = new ConsoleListener();
         Course course = courses.get(listener.getCourseNumber(courses.size()) - 1);
         printer.printStudentsFromCourse(course.getName(), studentDAO.getByCourseName(course.getName()));
     }
 
     public void requestDeleteStudent(int studentId) throws DAOException{
-        Student student = studentDAO.getStudentById(studentId);
-        studentDAO.deleteStudent(student);
+        studentDAO.deleteStudent(studentDAO.getStudentById(studentId));
     }
 
     public List<Course> requestGetAllCourses() throws DAOException {

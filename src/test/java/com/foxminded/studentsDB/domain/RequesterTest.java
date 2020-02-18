@@ -1,0 +1,73 @@
+package com.foxminded.studentsDB.domain;
+
+import com.foxminded.studentsDB.dao.CourseDAO;
+import com.foxminded.studentsDB.dao.DAOException;
+import com.foxminded.studentsDB.dao.GroupDAO;
+import com.foxminded.studentsDB.dao.StudentDAO;
+import com.foxminded.studentsDB.ui.Listener;
+import com.foxminded.studentsDB.ui.Printer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+
+import java.util.Collections;
+import java.util.List;
+
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+class RequesterTest {
+    private final Group GROUP = new Group(1,"te-st");
+    private List<Group> groups = Collections.singletonList(GROUP);
+    private final Course COURSE = new Course(1, "test course", "course for testing");
+    private List<Course> courses = Collections.singletonList(COURSE);
+    private final Student STUDENT = new Student(1, "Test", "Student");
+    private List<Student> students = Collections.singletonList(STUDENT);
+    @Mock
+    private StudentDAO studentDAO;
+    @Mock
+    private CourseDAO courseDAO;
+    @Mock
+    private GroupDAO groupDAO;
+    @Mock
+    private Printer printer;
+    @Mock
+    private Listener listener;
+    @InjectMocks
+    private Requester requester = new Requester();
+
+    RequesterTest() throws DAOException {
+    }
+
+    @Test
+    public void shouldCallGetGroupsByCounter() throws DAOException {
+        int i = 1;
+        when(groupDAO.getGroupsByCounter(i)).thenReturn(groups);
+        requester.requestGetGroupsByCounter(i);
+        verify(groupDAO).getGroupsByCounter(i);
+    }
+
+    @Test
+    public void shouldCallFourMethods() throws DAOException {
+        when(courseDAO.getAllCourses()).thenReturn(courses);
+        when(listener.getCourseNumber(1)).thenReturn(1);
+        when(studentDAO.getByCourseName(COURSE.getName())).thenReturn(students);
+        requester.requestGetStudentsByCourse();
+        verify(courseDAO).getAllCourses();
+        verify(listener).getCourseNumber(1);
+        verify(studentDAO).getByCourseName(COURSE.getName());
+        verify(printer).printStudentsFromCourse(COURSE.getName(), students);
+    }
+
+    @Test
+    public void shouldCallDeleteStudent() throws DAOException {
+        when(studentDAO.getStudentById(1)).thenReturn(STUDENT);
+        requester.requestDeleteStudent(1);
+        verify(studentDAO).getStudentById(1);
+        verify(studentDAO).deleteStudent(STUDENT);
+    }
+}

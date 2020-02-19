@@ -40,11 +40,6 @@ public class Student {
         this.groupId = groupID;
     }
 
-    public boolean assignToCourse(Course course) throws DAOException {
-        StudentDAO studentDAO = new StudentDAO();
-        return studentDAO.assignToCourse(this, course);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

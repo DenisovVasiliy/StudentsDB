@@ -10,6 +10,8 @@ import com.foxminded.studentsDB.ui.Listener;
 import com.foxminded.studentsDB.ui.Printer;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Requester {
     private Printer printer = new ConsolePrinter();
@@ -40,5 +42,13 @@ public class Requester {
         List<Course> courses = courseDAO.getAllCourses();
         printer.printCourses(courses);
         return courses;
+    }
+
+    public void requestAssignStudentsToCourses(Map<Student, Set<Course>> assignMap) throws DAOException {
+        studentDAO.assignToCourses(assignMap);
+    }
+
+    public void requestAssignStudentToCourse(Student student, Course course) throws DAOException {
+        studentDAO.assignToCourse(student, course);
     }
 }

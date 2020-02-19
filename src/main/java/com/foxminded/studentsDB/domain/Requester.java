@@ -1,7 +1,7 @@
 package com.foxminded.studentsDB.domain;
 
 import com.foxminded.studentsDB.dao.CourseDAO;
-import com.foxminded.studentsDB.dao.DAOException;
+import com.foxminded.studentsDB.dao.exceptions.DAOException;
 import com.foxminded.studentsDB.dao.GroupDAO;
 import com.foxminded.studentsDB.dao.StudentDAO;
 import com.foxminded.studentsDB.ui.ConsoleListener;
@@ -34,7 +34,7 @@ public class Requester {
         printer.printStudentsFromCourse(course.getName(), studentDAO.getByCourseName(course.getName()));
     }
 
-    public void requestDeleteStudent(int studentId) throws DAOException{
+    public void requestDeleteStudent(int studentId) throws DAOException {
         studentDAO.deleteStudent(studentDAO.getStudentById(studentId));
     }
 

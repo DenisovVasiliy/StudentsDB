@@ -1,6 +1,6 @@
 package com.foxminded.studentsDB.ui;
 
-import com.foxminded.studentsDB.dao.DAOException;
+import com.foxminded.studentsDB.dao.exceptions.DAOException;
 import com.foxminded.studentsDB.domain.Requester;
 
 import java.util.Scanner;
@@ -51,7 +51,7 @@ public class ConsoleListener implements Listener {
         int courseNumber;
         if (console.hasNextInt()) {
             courseNumber = console.nextInt();
-            if((courseNumber > 0) && (courseNumber <= limit)) {
+            if ((courseNumber > 0) && (courseNumber <= limit)) {
                 return courseNumber;
             }
         } else printer.printString(MessagesConstants.COURSE_NUMBER_INPUT_ERROR);

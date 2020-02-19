@@ -1,6 +1,11 @@
 package com.foxminded.studentsDB.domain;
 
-import com.foxminded.studentsDB.dao.*;
+import com.foxminded.studentsDB.dao.CourseDAO;
+import com.foxminded.studentsDB.dao.GroupDAO;
+import com.foxminded.studentsDB.dao.StudentDAO;
+import com.foxminded.studentsDB.dao.DataReader;
+import com.foxminded.studentsDB.dao.DataConstants;
+import com.foxminded.studentsDB.dao.exceptions.DAOException;
 
 import java.util.Set;
 import java.util.List;

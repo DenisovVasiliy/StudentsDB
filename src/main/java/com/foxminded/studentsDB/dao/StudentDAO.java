@@ -2,7 +2,7 @@ package com.foxminded.studentsDB.dao;
 
 import com.foxminded.studentsDB.domain.Course;
 import com.foxminded.studentsDB.domain.Student;
-import com.foxminded.studentsDB.ui.Listener;
+import com.foxminded.studentsDB.dao.exceptions.DAOException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class StudentDAO {
     private DAOFactory daoFactory = DAOFactory.getInstance();
@@ -102,7 +101,7 @@ public class StudentDAO {
         try (Connection connection = daoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(script)) {
             statement.setInt(1, id);
-            try(ResultSet resultSet = statement.executeQuery()) {
+            try (ResultSet resultSet = statement.executeQuery()) {
                 result = processStudentsSet(resultSet);
             }
         } catch (SQLException e) {

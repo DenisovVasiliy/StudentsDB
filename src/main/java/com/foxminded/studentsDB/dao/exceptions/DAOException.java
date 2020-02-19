@@ -1,4 +1,4 @@
-package com.foxminded.studentsDB.dao;
+package com.foxminded.studentsDB.dao.exceptions;
 
 public class DAOException extends Exception {
     public DAOException() {

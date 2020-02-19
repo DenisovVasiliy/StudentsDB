@@ -1,5 +1,7 @@
 package com.foxminded.studentsDB.dao;
 
+import com.foxminded.studentsDB.dao.exceptions.DAOException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

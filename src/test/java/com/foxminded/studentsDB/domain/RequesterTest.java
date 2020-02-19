@@ -1,7 +1,7 @@
 package com.foxminded.studentsDB.domain;
 
 import com.foxminded.studentsDB.dao.CourseDAO;
-import com.foxminded.studentsDB.dao.DAOException;
+import com.foxminded.studentsDB.dao.exceptions.DAOException;
 import com.foxminded.studentsDB.dao.GroupDAO;
 import com.foxminded.studentsDB.dao.StudentDAO;
 import com.foxminded.studentsDB.ui.Listener;

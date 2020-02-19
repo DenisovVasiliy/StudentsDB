@@ -1,5 +1,7 @@
 package com.foxminded.studentsDB.dao;
 
+import com.foxminded.studentsDB.dao.exceptions.DAOException;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,7 +16,7 @@ public class ScriptExecutor {
         DAOFactory daoFactory = DAOFactory.getInstance();
         try (Connection connection = daoFactory.getConnection();
              Statement statement = connection.createStatement()) {
-            for(String line : scripts) {
+            for (String line : scripts) {
                 statement.addBatch(line);
             }
             statement.executeBatch();

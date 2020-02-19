@@ -1,9 +1,5 @@
 package com.foxminded.studentsDB.domain;
 
-import com.foxminded.studentsDB.dao.DAOException;
-import com.foxminded.studentsDB.dao.StudentDAO;
-
-
 public class Student {
     private int id;
     private String firstName;

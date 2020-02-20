@@ -1,4 +1,4 @@
-package com.foxminded.studentsDB.dao;
+package com.foxminded.studentsDB.dao.infra;
 
 public class DatabaseAccess {
     private String url;

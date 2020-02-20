@@ -1,7 +1,8 @@
-package com.foxminded.studentsDB.dao;
+package com.foxminded.studentsDB.dao.infra;
 
 import com.foxminded.studentsDB.domain.Course;
 import com.foxminded.studentsDB.dao.exceptions.DAOException;
+import com.foxminded.studentsDB.dao.exceptions.MessagesConstantsDAO;
 
 import java.net.URL;
 import java.util.ArrayList;

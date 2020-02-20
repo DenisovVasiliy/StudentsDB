@@ -1,4 +1,4 @@
-package com.foxminded.studentsDB.dao;
+package com.foxminded.studentsDB.dao.exceptions;
 
 public class MessagesConstantsDAO {
     public static final String FILE_NOT_FOUND_MESSAGE = "File is not found: ";

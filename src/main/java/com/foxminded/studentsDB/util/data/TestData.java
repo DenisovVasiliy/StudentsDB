@@ -1,4 +1,8 @@
-package com.foxminded.studentsDB.domain;
+package com.foxminded.studentsDB.util.data;
+
+import com.foxminded.studentsDB.domain.Course;
+import com.foxminded.studentsDB.domain.Group;
+import com.foxminded.studentsDB.domain.Student;
 
 import java.util.Set;
 import java.util.List;

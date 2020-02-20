@@ -2,8 +2,8 @@ package com.foxminded.studentsDB;
 
 import com.foxminded.studentsDB.dao.exceptions.DAOException;
 import com.foxminded.studentsDB.dao.QueryConstants;
-import com.foxminded.studentsDB.dao.ScriptExecutor;
-import com.foxminded.studentsDB.domain.DataCreator;
+import com.foxminded.studentsDB.dao.infra.ScriptExecutor;
+import com.foxminded.studentsDB.util.data.DataCreator;
 import com.foxminded.studentsDB.ui.ConsoleListener;
 import com.foxminded.studentsDB.ui.Listener;
 

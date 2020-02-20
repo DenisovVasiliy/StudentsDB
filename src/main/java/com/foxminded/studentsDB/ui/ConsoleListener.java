@@ -1,7 +1,7 @@
 package com.foxminded.studentsDB.ui;
 
 import com.foxminded.studentsDB.dao.exceptions.DAOException;
-import com.foxminded.studentsDB.domain.Requester;
+import com.foxminded.studentsDB.service.Requester;
 
 import java.util.Scanner;
 

@@ -1,4 +1,4 @@
-package com.foxminded.studentsDB.dao;
+package com.foxminded.studentsDB.dao.infra;
 
 import com.foxminded.studentsDB.dao.exceptions.DAOException;
 
@@ -21,7 +21,7 @@ public class DAOFactory {
     public static synchronized DAOFactory getInstance() throws DAOException {
         if(instance == null) {
             DataReader dataReader = DataReader.getInstance();
-            DatabaseAccess access = dataReader.getAccessData("database.properties");
+            DatabaseAccess access = dataReader.getAccessData("Database.properties");
             instance = new DAOFactory(access);
         }
         return instance;

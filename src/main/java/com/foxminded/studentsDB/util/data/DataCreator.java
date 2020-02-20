@@ -1,11 +1,14 @@
-package com.foxminded.studentsDB.domain;
+package com.foxminded.studentsDB.util.data;
 
 import com.foxminded.studentsDB.dao.CourseDAO;
 import com.foxminded.studentsDB.dao.GroupDAO;
 import com.foxminded.studentsDB.dao.StudentDAO;
-import com.foxminded.studentsDB.dao.DataReader;
-import com.foxminded.studentsDB.dao.DataConstants;
+import com.foxminded.studentsDB.dao.infra.DataReader;
+import com.foxminded.studentsDB.dao.infra.DataConstants;
 import com.foxminded.studentsDB.dao.exceptions.DAOException;
+import com.foxminded.studentsDB.domain.Course;
+import com.foxminded.studentsDB.domain.Group;
+import com.foxminded.studentsDB.domain.Student;
 
 import java.util.Set;
 import java.util.List;

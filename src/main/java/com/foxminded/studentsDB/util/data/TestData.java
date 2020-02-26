@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 public class TestData {
-    Map<Student, Set<Course>> students;
-    List<Course> courses;
-    List<Group> groups;
+    private Map<Student, Set<Course>> students;
+    private List<Course> courses;
+    private List<Group> groups;
 
     public Map<Student, Set<Course>> getStudents() {
         return students;

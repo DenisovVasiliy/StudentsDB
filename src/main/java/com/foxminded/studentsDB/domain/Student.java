@@ -50,4 +50,9 @@ public class Student {
     public int hashCode() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "Student #" + this.getId() + ": " + this.getFirstName() + " " + this.getLastName();
+    }
 }

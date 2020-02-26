@@ -24,4 +24,30 @@ public class Group {
     public String getName() {
         return name;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Group)) return false;
+
+        Group group = (Group) o;
+
+        if (id != group.id) return false;
+        return name.equals(group.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

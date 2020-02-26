@@ -12,6 +12,7 @@ public class QueryConstants {
     public static final String GET_GROUPS_BY_COUNTER = "GetGroupsByCounter.sql";
     public static final String INSERT_GROUPS = "InsertGroups.sql";
     public static final String GET_ALL_COURSES = "GetAllCourses.sql";
+    public static final String GET_ALL_GROUPS = "GetAllGroups.sql";
     public static final String INSERT_COURSES = "InsertCourses.sql";
     public static final String CREATE_TABLES = "CreateTables.sql";
     public static final String GET_STUDENT_BY_ID = "GetStudentById.sql";

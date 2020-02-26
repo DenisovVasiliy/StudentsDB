@@ -20,6 +20,7 @@ public class MessagesConstantsDAO {
     public static final String CANNOT_GET_GROUPS_BY_COUNTER = "Cannot get groups with less or equals student count: ";
     public static final String CANNOT_PROCESS_GROUP_SET = "Cannot process groups set: ";
     public static final String CANNOT_GET_COURSES = "Cannot get all courses: ";
+    public static final String CANNOT_GET_GROUPS = "Cannot get all groups: ";
     public static final String CANNOT_INSERT_COURSES = "Cannot insert courses: ";
     public static final String CANNOT_PROCESS_COURSES_SET = "Cannot process result set of courses: ";
     public static final String CANNOT_GET_STUDENT_BY_ID = "Cannot get student by id: ";

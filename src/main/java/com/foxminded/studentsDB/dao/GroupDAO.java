@@ -58,6 +58,19 @@ public class GroupDAO {
         return groups;
     }
 
+    public List<Group> getAllGroups() throws DAOException {
+        String script = dataReader.getQuery(QueryConstants.GET_ALL_GROUPS);
+        List<Group> groups = null;
+        try (Connection connection = daoFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(script);
+             ResultSet resultSet = statement.executeQuery()) {
+                groups = processGroupSet(resultSet);
+        } catch (SQLException e) {
+            throw new DAOException(MessagesConstantsDAO.CANNOT_GET_GROUPS, e);
+        }
+        return groups;
+    }
+
     private List<Group> processGroupSet(ResultSet resultSet) throws DAOException {
         List<Group> groups = new ArrayList<>();
         try {

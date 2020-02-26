@@ -31,8 +31,10 @@ public class DataReader {
     public DatabaseAccess getAccessData(String fileName) throws DAOException {
         file = getFileFromResources(fileName);
         checkFile();
-        List<String> data =  getData();
-        return new DatabaseAccess(data.get(0), data.get(1), data.get(2));
+        List<String> data = getData();
+        if(data.size() == 3) {
+            return new DatabaseAccess(data.get(0), data.get(1), data.get(2));
+        } else return new DatabaseAccess(data.get(0), data.get(1), "");
     }
 
     public String[] getScripts(String fileName) throws DAOException {

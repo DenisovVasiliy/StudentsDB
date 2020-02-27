@@ -6,12 +6,15 @@ import com.foxminded.studentsDB.dao.infra.DAOFactory;
 import com.foxminded.studentsDB.dao.infra.DataReader;
 import com.foxminded.studentsDB.dao.infra.ScriptExecutor;
 import com.foxminded.studentsDB.domain.Course;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

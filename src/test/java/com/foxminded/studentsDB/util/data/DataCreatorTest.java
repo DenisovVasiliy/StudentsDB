@@ -14,8 +14,6 @@ import com.foxminded.studentsDB.domain.Student;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +22,6 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@ExtendWith(MockitoExtension.class)
 class DataCreatorTest {
     private StudentDAO studentDAO = new StudentDAO();
     private CourseDAO courseDAO = new CourseDAO();
@@ -36,7 +33,7 @@ class DataCreatorTest {
 
     @BeforeAll
     public static void prepare() throws DAOException {
-        DAOFactory daoFactory = DAOFactory.getInstance("TestDatabase.properties");
+        DAOFactory daoFactory = DAOFactory.getInstance("TestDatabaseH2.properties");
     }
 
     @BeforeEach

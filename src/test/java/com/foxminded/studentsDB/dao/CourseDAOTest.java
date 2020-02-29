@@ -42,11 +42,17 @@ class CourseDAOTest {
     @Test
     public void shouldInsertCoursesIntoDB() throws DAOException {
         CourseDAO courseDAO = new CourseDAO();
-        List<Course> courses = courseDAO.getAllCourses();
+        List<Course> courses = readCoursesFromDB();
         assertEquals(0, courses.size());
 
         courseDAO.insertCourses(testCourseList);
 
+        List<Course> actualCourses = readCoursesFromDB();
+
+        assertEquals(testCourseList, actualCourses);
+    }
+
+    private List<Course> readCoursesFromDB() throws DAOException {
         String script = dataReader.getQuery(QueryConstants.GET_ALL_COURSES);
         List<Course> actualCourses = null;
         try (Connection connection = daoFactory.getConnection();
@@ -56,13 +62,18 @@ class CourseDAOTest {
         } catch (SQLException e) {
             throw new DAOException(MessagesConstantsDAO.CANNOT_GET_COURSES, e);
         }
-
-        assertEquals(testCourseList, actualCourses);
+        return actualCourses;
     }
 
     @Test
     public void shouldGetCoursesFromDB() throws DAOException {
         CourseDAO courseDAO = new CourseDAO();
+        insertCoursesIntoDB();
+        List<Course> actualCourses = courseDAO.getAllCourses();
+        assertEquals(testCourseList, actualCourses);
+    }
+
+    private void insertCoursesIntoDB() throws DAOException {
         String script = dataReader.getQuery(QueryConstants.INSERT_COURSES);
         try (Connection connection = daoFactory.getConnection();
              PreparedStatement statement =
@@ -74,8 +85,8 @@ class CourseDAOTest {
             }
             statement.executeBatch();
             try (ResultSet resultSet = statement.getGeneratedKeys()) {
-                for(Course course : testCourseList) {
-                    if(resultSet.next()) {
+                for (Course course : testCourseList) {
+                    if (resultSet.next()) {
                         course.setId(resultSet.getInt(1));
                     }
                 }
@@ -83,10 +94,8 @@ class CourseDAOTest {
         } catch (SQLException e) {
             throw new DAOException(MessagesConstantsDAO.CANNOT_INSERT_COURSES, e);
         }
-
-        List<Course> actualCourses = courseDAO.getAllCourses();
-        assertEquals(testCourseList, actualCourses);
     }
+
 
     private List<Course> processCoursesSet(ResultSet resultSet) throws DAOException {
         List<Course> courses = new ArrayList<>();

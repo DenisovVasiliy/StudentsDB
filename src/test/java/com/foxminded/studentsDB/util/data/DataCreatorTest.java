@@ -55,11 +55,11 @@ class DataCreatorTest {
         testData = dataCreator.createTestData();
 
         students = studentDAO.getAllStudents();
-        assertEquals(testData.getStudents().keySet().size(),students.size());
+        assertEquals(testData.getStudents().keySet().size(), students.size());
         assertTrue(students.containsAll(testData.getStudents().keySet()));
 
         courses = courseDAO.getAllCourses();
-        assertEquals(testData.getCourses().size(),courses.size());
+        assertEquals(testData.getCourses().size(), courses.size());
         assertTrue(courses.containsAll(testData.getCourses()));
 
         groups = groupDAO.getAllGroups();
@@ -76,11 +76,11 @@ class DataCreatorTest {
         Map<Integer, Integer> groupsCounter = new HashMap<>();
         for (Student student : students) {
             Integer groupId = student.getGroupId();
-            if(groupId > 0) {
+            if (groupId > 0) {
                 groupsCounter.put(groupId, groupsCounter.getOrDefault(groupId, 0) + 1);
             }
         }
-        for(Integer groupId : groupsCounter.keySet()) {
+        for (Integer groupId : groupsCounter.keySet()) {
             Integer counter = groupsCounter.get(groupId);
             assertTrue((counter >= 10) && (counter <= 30));
         }

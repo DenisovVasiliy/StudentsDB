@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class RequesterTest {
-    private final static Group GROUP = new Group(1,"te-st");
+    private final static Group GROUP = new Group(1, "te-st");
     private static List<Group> groups = Collections.singletonList(GROUP);
     private final static Course COURSE = new Course(1, "test course", "course for testing");
     private static List<Course> courses = Collections.singletonList(COURSE);

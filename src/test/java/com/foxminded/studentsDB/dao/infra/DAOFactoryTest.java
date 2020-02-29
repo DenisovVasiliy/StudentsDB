@@ -14,7 +14,7 @@ class DAOFactoryTest {
     @Test
     void getConnection() throws DAOException, SQLException {
         DAOFactory daoFactory = DAOFactory.getInstance();
-        try(Connection connection = daoFactory.getConnection()) {
+        try (Connection connection = daoFactory.getConnection()) {
             assertTrue(connection.isValid(1));
             assertFalse(connection.isClosed());
         }
@@ -22,8 +22,8 @@ class DAOFactoryTest {
 
     @Test
     void getTestConnection() throws DAOException, SQLException {
-        DAOFactory daoFactory = DAOFactory.getInstance("TestDatabase.properties");
-        try(Connection connection = daoFactory.getConnection()) {
+        DAOFactory daoFactory = DAOFactory.getInstance("TestDatabaseH2.properties");
+        try (Connection connection = daoFactory.getConnection()) {
             assertTrue(connection.isValid(1));
             assertFalse(connection.isClosed());
         }

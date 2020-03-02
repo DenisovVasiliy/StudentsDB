@@ -22,40 +22,45 @@ public class DataReader {
     }
 
     public static synchronized DataReader getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new DataReader();
         }
         return instance;
     }
 
     public DatabaseAccess getAccessData(String fileName) throws DAOException {
+        isNull(fileName);
         file = getFileFromResources(fileName);
         checkFile();
         List<String> data = getData();
-        if(data.size() == 3) {
+        if (data.size() == 3) {
             return new DatabaseAccess(data.get(0), data.get(1), data.get(2));
         } else return new DatabaseAccess(data.get(0), data.get(1), "");
     }
 
     public String[] getScripts(String fileName) throws DAOException {
+        isNull(fileName);
         file = getFileFromResources(fileName);
         checkFile();
         return buildScripts(getData());
     }
 
     public String getQuery(String fileName) throws DAOException {
+        isNull(fileName);
         file = getFileFromResources(fileName);
         checkFile();
         return getData().get(0);
     }
 
     public List<String> getNames(String fileName) throws DAOException {
+        isNull(fileName);
         file = getFileFromResources(fileName);
         checkFile();
         return getData();
     }
 
     public List<Course> getCourses(String fileName) throws DAOException {
+        isNull(fileName);
         file = getFileFromResources(fileName);
         checkFile();
         List<Course> courses = new ArrayList<>();
@@ -70,7 +75,7 @@ public class DataReader {
     private File getFileFromResources(String fileName) {
         ClassLoader classLoader = getClass().getClassLoader();
         URL resource = classLoader.getResource(fileName);
-        if(resource == null) {
+        if (resource == null) {
             throw new IllegalArgumentException(MessagesConstantsDAO.FILE_NOT_FOUND_MESSAGE + fileName);
         } else return new File(resource.getFile());
     }
@@ -81,13 +86,13 @@ public class DataReader {
     }
 
     private void checkForExistence() throws DAOException {
-        if(!(file.exists())) {
+        if (!(file.exists())) {
             throw new DAOException(MessagesConstantsDAO.FILE_NOT_FOUND_MESSAGE + file.getAbsolutePath());
         }
     }
 
     private void checkForEmptiness() throws DAOException {
-        if(file.length() == 0) {
+        if (file.length() == 0) {
             throw new DAOException(MessagesConstantsDAO.FILE_IS_EMPTY_MESSAGE + file.getAbsolutePath());
         }
     }
@@ -109,9 +114,15 @@ public class DataReader {
 
     private String[] buildScripts(List<String> list) {
         StringBuilder script = new StringBuilder();
-        for(String line : list) {
+        for (String line : list) {
             script.append(line);
         }
         return script.toString().split(";");
+    }
+
+    private void isNull(String line) {
+        if (line == null) {
+            throw new IllegalArgumentException(MessagesConstantsDAO.FILE_NAME_NULL);
+        }
     }
 }

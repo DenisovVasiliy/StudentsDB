@@ -1,9 +1,7 @@
 package com.foxminded.studentsDB.dao;
 
 import com.foxminded.studentsDB.dao.exceptions.DAOException;
-import com.foxminded.studentsDB.dao.exceptions.MessagesConstantsDAO;
 import com.foxminded.studentsDB.dao.infra.DAOFactory;
-import com.foxminded.studentsDB.dao.infra.DataReader;
 import com.foxminded.studentsDB.dao.infra.ScriptExecutor;
 import com.foxminded.studentsDB.domain.Group;
 import com.foxminded.studentsDB.domain.Student;
@@ -11,11 +9,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,10 +18,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class GroupDAOTest {
     private Group group = new Group("te-st");
     private List<Group> testGroups = Collections.singletonList(group);
-    private DataReader dataReader = DataReader.getInstance();
     private static DAOFactory daoFactory;
     private List<Group> groupList = new ArrayList<>();
     private List<Student> studentList = new ArrayList<>();
+    private GroupDAO groupDAO = new GroupDAO();
+
+    GroupDAOTest() throws DAOException {
+    }
 
     @BeforeAll
     public static void prepare() throws DAOException {
@@ -43,28 +39,26 @@ class GroupDAOTest {
 
     @Test
     public void shouldInsertGroupIntoDB() throws DAOException {
-        GroupDAO groupDAO = new GroupDAO();
-        List<Group> groups = readGroupsFromDB();
+        List<Group> groups = groupDAO.getAllGroups();
         assertEquals(0, groups.size());
 
         groupDAO.insertGroups(testGroups);
 
-        List<Group> actualGroups = readGroupsFromDB();
+        List<Group> actualGroups = groupDAO.getAllGroups();
 
         assertEquals(testGroups, actualGroups);
     }
 
     @Test
     public void shouldGetAllGroupsFromDB() throws DAOException {
-        GroupDAO groupDAO = new GroupDAO();
-        insertGroupsIntoDB(testGroups);
+        groupDAO.insertGroups(testGroups);
         List<Group> actualGroups = groupDAO.getAllGroups();
         assertEquals(testGroups, actualGroups);
     }
 
     @Test
     public void shouldGetGroupsWithLessOrEqualsStudentCount() throws DAOException {
-        insertGroupsIntoDB(createGroups());
+        groupDAO.insertGroups(createGroups());
         new StudentDAO().insertStudents(createStudents());
         List<Group> expectedGroups = new ArrayList<>();
         expectedGroups.add(groupList.get(0));
@@ -101,53 +95,5 @@ class GroupDAOTest {
             groupList.add(new Group("test-0" + i));
         }
         return groupList;
-    }
-
-    private List<Group> readGroupsFromDB() throws DAOException {
-        String script = dataReader.getQuery(QueryConstants.GET_ALL_GROUPS);
-        List<Group> groups = null;
-        try (Connection connection = daoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(script);
-             ResultSet resultSet = statement.executeQuery()) {
-            groups = processGroupSet(resultSet);
-        } catch (SQLException e) {
-            throw new DAOException(MessagesConstantsDAO.CANNOT_GET_GROUPS, e);
-        }
-        return groups;
-    }
-
-    private void insertGroupsIntoDB(List<Group> groups) throws DAOException {
-        String script = dataReader.getQuery(QueryConstants.INSERT_GROUPS);
-        try (Connection connection = daoFactory.getConnection();
-             PreparedStatement statement =
-                     connection.prepareStatement(script, Statement.RETURN_GENERATED_KEYS)) {
-            for (Group group : groups) {
-                statement.setString(1, group.getName());
-                statement.addBatch();
-            }
-            statement.executeBatch();
-            try (ResultSet resultSet = statement.getGeneratedKeys()) {
-                for (Group group : groups) {
-                    if (resultSet.next()) {
-                        group.setId(resultSet.getInt(1));
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            throw new DAOException(MessagesConstantsDAO.CANNOT_INSERT_GROUPS, e);
-        }
-    }
-
-    private List<Group> processGroupSet(ResultSet resultSet) throws DAOException {
-        List<Group> groups = new ArrayList<>();
-        try {
-            while (resultSet.next()) {
-                Group group = new Group(resultSet.getInt("id"), resultSet.getString("name"));
-                groups.add(group);
-            }
-        } catch (SQLException e) {
-            throw new DAOException(MessagesConstantsDAO.CANNOT_PROCESS_GROUP_SET, e);
-        }
-        return groups;
     }
 }

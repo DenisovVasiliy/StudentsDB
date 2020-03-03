@@ -23,10 +23,14 @@ class DataReaderTest {
     private static final String TEST_COURSES = "TestCourses.txt";
     private static final String TEST_ACCESS_WITH_PASSWORD = "TestDatabase.properties";
     private static final String TEST_ACCESS_WITHOUT_PASSWORD = "TestDatabaseH2.properties";
-    private final DatabaseAccess ACCESS_WITH_PASSWORD = new DatabaseAccess("jdbc:postgresql://localhost:5432/test1",
-            "foxUser", "5825");
-    private final DatabaseAccess ACCESS_WITHOUT_PASSWORD = new DatabaseAccess("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1",
-            "sa", "");
+    private final DatabaseAccess ACCESS_WITH_PASSWORD = new DatabaseAccess(
+            "jdbc:postgresql://localhost:5432/test1",
+            "foxUser", "5825"
+    );
+    private final DatabaseAccess ACCESS_WITHOUT_PASSWORD = new DatabaseAccess(
+            "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1",
+            "sa", ""
+    );
     private static String[] expectedScripts = new String[3];
     private final String QUERY = "INSERT INTO courses(name, description) VALUES(?, ?);";
     private static List<String> expectedNames = new ArrayList<>();

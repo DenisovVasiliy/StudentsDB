@@ -5,7 +5,6 @@ public class MessagesConstantsDAO {
     public static final String FILE_IS_EMPTY_MESSAGE = "File is empty: ";
     public static final String CANNOT_READ_FILE = "Cannot read a file: ";
     public static final String CANNOT_INSERT_STUDENTS_LIST = "Cannot insert list of students: ";
-    public static final String CANNOT_INSERT_STUDENT = "Cannot insert student: ";
     public static final String CANNOT_EXECUTE_SCRIPTS = "Cannot execute scripts: ";
     public static final String CANNOT_GET_ALL_STUDENTS = "Cannot get all students: ";
     public static final String CANNOT_GET_STUDENTS_BY_COURSE = "Cannot get students by course name: ";
@@ -24,5 +23,6 @@ public class MessagesConstantsDAO {
     public static final String CANNOT_INSERT_COURSES = "Cannot insert courses: ";
     public static final String CANNOT_PROCESS_COURSES_SET = "Cannot process result set of courses: ";
     public static final String CANNOT_GET_STUDENT_BY_ID = "Cannot get student by id: ";
+    public static final String CANNOT_GET_COURSE_BY_ID = "Cannot get course by id: ";
     public static final String FILE_NAME_NULL = "File's name shouldn't be null!";
 }

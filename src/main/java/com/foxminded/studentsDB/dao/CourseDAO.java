@@ -34,6 +34,21 @@ public class CourseDAO {
         return courses;
     }
 
+    public Course getCourseById(int id) throws DAOException {
+        String script = dataReader.getQuery(QueryConstants.GET_COURSE_BY_ID);
+        List<Course> courses = null;
+        try (Connection connection = daoFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(script);) {
+            statement.setInt(1, id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                courses = processCoursesSet(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(MessagesConstantsDAO.CANNOT_GET_COURSE_BY_ID, e);
+        }
+        return courses.get(0);
+    }
+
    public void insertCourses(List<Course> courses) throws DAOException {
        String script = dataReader.getQuery(QueryConstants.INSERT_COURSES);
        try (Connection connection = daoFactory.getConnection();

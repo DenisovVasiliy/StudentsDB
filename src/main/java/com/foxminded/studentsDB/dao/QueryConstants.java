@@ -16,4 +16,5 @@ public class QueryConstants {
     public static final String INSERT_COURSES = "InsertCourses.sql";
     public static final String CREATE_TABLES = "CreateTables.sql";
     public static final String GET_STUDENT_BY_ID = "GetStudentById.sql";
+    public static final String GET_COURSE_BY_ID = "GetCourseById.sql";
 }

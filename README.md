@@ -1,6 +1,6 @@
 # STUDENTS DATABASE
 
-Task 7 - SQL
+## Task 7 - SQL
 Create an application sql-jdbc-school that inserts/updates/deletes data in the database using JDBC.
 Use PostgreSQL DB.
 
@@ -57,7 +57,7 @@ Tables (given types are Java types, use SQL analogs that fit the most:
 
 	f. Remove the student from one of his or her courses
 	
-# ACCESS DATA
+## ACCESS DATA
 
 Using database:
      

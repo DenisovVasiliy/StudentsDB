@@ -1,26 +1,26 @@
 # STUDENTS DATABASE
 
-Task 7 - SQL
+## Task 7 - SQL
 Create an application sql-jdbc-school that inserts/updates/deletes data in the database using JDBC.
 Use PostgreSQL DB.
 
 Tables (given types are Java types, use SQL analogs that fit the most:
 
-groups(
-	group_id int,
-	group_name string
-)
-students(
-	student_id int,
-	group_id int,
-	first_name string,
-	last_name string
-)
-courses(
-	course_id int,
-	course_name string,
-	course_description string
-)
+    groups(
+	    group_id int,
+	    group_name string
+    )
+    students(
+	    student_id int,
+	    group_id int,
+	    first_name string,
+	    last_name string
+    )
+    courses(
+	    course_id int,
+	    course_name string,
+	    course_description string
+    )
 1. Create SQL files with data:
 
 	a. create user and database. Assign all privileges on the database to the user. (DB and user should be created before application runs)
@@ -57,7 +57,7 @@ courses(
 
 	f. Remove the student from one of his or her courses
 	
-# ACCESS DATA
+## ACCESS DATA
 
 Using database:
      

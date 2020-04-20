@@ -1,4 +1,4 @@
-# university
+# STUDENTS DATABASE
 
 Task 7 - SQL
 Create an application sql-jdbc-school that inserts/updates/deletes data in the database using JDBC.
@@ -56,3 +56,11 @@ courses(
 	e. Add a student to the course (from a list)
 
 	f. Remove the student from one of his or her courses
+	
+# ACCESS DATA
+
+Using database:
+     
+      jdbc:postgresql://localhost:5432/foxUniversity 
+      user = foxUser
+      password = 5825

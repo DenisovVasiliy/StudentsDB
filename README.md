@@ -55,7 +55,7 @@ courses(
 
 	e. Add a student to the course (from a list)
 
-	f. Remove the student from one of his or her courses
+	f. Remove the student from one of his or her courses 
 	
 # ACCESS DATA
 
